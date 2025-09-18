@@ -20,6 +20,7 @@
 // EFFECT_HUE_VARIATION                 LIL_FEATURE_MAIN_GRADATION_MAP LIL_FEATURE_MAIN_TONE_CORRECTION
 // _COLORADDSUBDIFF_ON                  LIL_FEATURE_MAIN2ND
 // _COLORCOLOR_ON                       LIL_FEATURE_MAIN3RD
+// EFFECT_EXTRA_TEX                     LIL_FEATURE_MAIN4TH
 // _SUNDISK_NONE                        LIL_FEATURE_ANIMATE_DECAL
 // GEOM_TYPE_FROND                      LIL_FEATURE_LAYER_DISSOLVE
 // _COLOROVERLAY_ON                     LIL_FEATURE_ALPHAMASK
@@ -91,6 +92,11 @@
 #if defined(_COLORCOLOR_ON)
     #define LIL_FEATURE_MAIN3RD
     #undef _COLORCOLOR_ON
+#endif
+
+#if defined(EFFECT_EXTRA_TEX)
+    #define LIL_FEATURE_MAIN4TH
+    #undef EFFECT_EXTRA_TEX
 #endif
 
 #if defined(_SUNDISK_NONE)
@@ -260,6 +266,10 @@
 #define LIL_FEATURE_Main3rdBlendMask
 #define LIL_FEATURE_Main3rdDissolveMask
 #define LIL_FEATURE_Main3rdDissolveNoiseMask
+#define LIL_FEATURE_Main4thTex
+#define LIL_FEATURE_Main4thBlendMask
+#define LIL_FEATURE_Main4thDissolveMask
+#define LIL_FEATURE_Main4thDissolveNoiseMask
 #define LIL_FEATURE_AlphaMask
 #define LIL_FEATURE_BumpMap
 #define LIL_FEATURE_Bump2ndMap

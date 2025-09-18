@@ -29,6 +29,7 @@
 #if defined(LIL_MULTI)
     #define _UseMain2ndTex true
     #define _UseMain3rdTex true
+    #define _UseMain4thTex true
     #define _UseShadow true
     #define _UseRimShade true
     #define _UseBacklight true

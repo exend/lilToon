@@ -323,6 +323,14 @@ float4 frag(v2f input LIL_VFACE(facing)) : SV_Target
             OVERRIDE_MAIN3RD
         #endif
 
+        // 4th
+        BEFORE_MAIN4TH
+        #if defined(LIL_FEATURE_MAIN4TH)
+            float main4thDissolveAlpha = 0.0;
+            float4 color4th = 1.0;
+            OVERRIDE_MAIN4TH
+        #endif
+
         //------------------------------------------------------------------------------------------------------------------------------
         // Alpha Mask
         BEFORE_ALPHAMASK
@@ -433,6 +441,9 @@ float4 frag(v2f input LIL_VFACE(facing)) : SV_Target
             #if defined(LIL_FEATURE_MAIN3RD)
                 if(_UseMain3rdTex) fd.col.rgb = lilBlendColor(fd.col.rgb, color3rd.rgb, color3rd.a - color3rd.a * _Main3rdEnableLighting, _Main3rdTexBlendMode);
             #endif
+            #if defined(LIL_FEATURE_MAIN4TH)
+                if(_UseMain4thTex) fd.col.rgb = lilBlendColor(fd.col.rgb, color4th.rgb, color4th.a - color4th.a * _Main4thEnableLighting, _Main4thTexBlendMode);
+            #endif
         #else
             #if defined(LIL_FEATURE_SHADOW) && defined(LIL_OPTIMIZE_APPLY_SHADOW_FA)
                 OVERRIDE_SHADOW
@@ -445,6 +456,9 @@ float4 frag(v2f input LIL_VFACE(facing)) : SV_Target
             #endif
             #if defined(LIL_FEATURE_MAIN3RD)
                 if(_UseMain3rdTex) fd.col.rgb = lerp(fd.col.rgb, 0, color3rd.a - color3rd.a * _Main3rdEnableLighting);
+            #endif
+            #if defined(LIL_FEATURE_MAIN4TH)
+                if(_UseMain4thTex) fd.col.rgb = lerp(fd.col.rgb, 0, color4th.a - color4th.a * _Main4thEnableLighting);
             #endif
         #endif
 
@@ -542,6 +556,9 @@ float4 frag(v2f input LIL_VFACE(facing)) : SV_Target
                 #endif
                 #if defined(LIL_FEATURE_MAIN3RD)
                     fd.emissionColor += _Main3rdDissolveColor.rgb * main3rdDissolveAlpha;
+                #endif
+                #if defined(LIL_FEATURE_MAIN4TH)
+                    fd.emissionColor += _Main4thDissolveColor.rgb * main4thDissolveAlpha;
                 #endif
             #endif
 

@@ -374,10 +374,12 @@ namespace lilToon
             bool useDissolve = IsFeatureOnVectorX(material, "_DissolveParams");
             bool useMain2ndDissolve = IsFeatureOnVectorX(material, "_Main2ndDissolveParams");
             bool useMain3rdDissolve = IsFeatureOnVectorX(material, "_Main3rdDissolveParams");
+            bool useMain4thDissolve = IsFeatureOnVectorX(material, "_Main3rdDissolveParams");
             bool useMainTexHSVG = IsFeatureOnHSVG(material, "_MainTexHSVG");
             bool useMainGradation = IsFeatureOnFloat(material, "_MainGradationStrength");
             bool useMain2ndTex = IsFeatureOnFloat(material, "_UseMain2ndTex");
             bool useMain3rdTex = IsFeatureOnFloat(material, "_UseMain3rdTex");
+            bool useMain4thTex = IsFeatureOnFloat(material, "_UseMain4thTex");
             bool useBacklight = IsFeatureOnFloat(material, "_UseBacklight");
             bool useParallax = IsFeatureOnFloat(material, "_UseParallax");
             bool usePOM = IsFeatureOnFloat(material, "_UsePOM");
@@ -385,6 +387,7 @@ namespace lilToon
             bool useAlphaMask = IsFeatureOnFloat(material, "_AlphaMaskMode");
             bool useMain2ndTexDecalAnimation = IsFeatureOnDecalAnimation(material, "_Main2ndTexDecalAnimation");
             bool useMain3rdTexDecalAnimation = IsFeatureOnDecalAnimation(material, "_Main3rdTexDecalAnimation");
+            bool useMain4thTexDecalAnimation = IsFeatureOnDecalAnimation(material, "_Main4thTexDecalAnimation");
             bool useEmissionBlendMask = IsFeatureOnTexture(material, "_EmissionBlendMask");
             bool useEmission2ndBlendMask = IsFeatureOnTexture(material, "_Emission2ndBlendMask");
 
@@ -436,6 +439,7 @@ namespace lilToon
                 SetShaderKeywords(material, "EFFECT_HUE_VARIATION",                 false);
                 SetShaderKeywords(material, "_COLORADDSUBDIFF_ON",                  false);
                 SetShaderKeywords(material, "_COLORCOLOR_ON",                       false);
+                SetShaderKeywords(material, "EFFECT_EXTRA_TEX",                     false);
                 SetShaderKeywords(material, "_SUNDISK_NONE",                        false);
                 SetShaderKeywords(material, "GEOM_TYPE_FROND",                      false);
                 SetShaderKeywords(material, "_COLOROVERLAY_ON",                     false);
@@ -449,8 +453,9 @@ namespace lilToon
                 SetShaderKeywords(material, "EFFECT_HUE_VARIATION",                 useMainTexHSVG || useMainGradation);
                 SetShaderKeywords(material, "_COLORADDSUBDIFF_ON",                  useMain2ndTex);
                 SetShaderKeywords(material, "_COLORCOLOR_ON",                       useMain3rdTex);
-                SetShaderKeywords(material, "_SUNDISK_NONE",                        (useMain2ndTex && useMain2ndTexDecalAnimation) || (useMain3rdTex && useMain3rdTexDecalAnimation));
-                SetShaderKeywords(material, "GEOM_TYPE_FROND",                      (useMain2ndTex && useMain2ndDissolve) || (useMain3rdTex && useMain3rdDissolve));
+                SetShaderKeywords(material, "EFFECT_EXTRA_TEX",                     useMain4thTex);
+                SetShaderKeywords(material, "_SUNDISK_NONE",                        (useMain2ndTex && useMain2ndTexDecalAnimation) || (useMain3rdTex && useMain3rdTexDecalAnimation) || (useMain4thTex && useMain4thTexDecalAnimation));
+                SetShaderKeywords(material, "GEOM_TYPE_FROND",                      (useMain2ndTex && useMain2ndDissolve) || (useMain3rdTex && useMain3rdDissolve) || (useMain4thTex && useMain4thDissolve));
                 SetShaderKeywords(material, "_COLOROVERLAY_ON",                     tpmode != 0 && useAlphaMask);
                 SetShaderKeywords(material, "ANTI_FLICKER",                         useBacklight);
                 SetShaderKeywords(material, "_PARALLAXMAP",                         useParallax);
@@ -585,7 +590,14 @@ namespace lilToon
                     material.SetTexture("_Main3rdDissolveMask", null);
                     material.SetTexture("_Main3rdDissolveNoiseMask", null);
                 }
-                if(IsPropZero(material, "_UseShadow", animatedProps))
+                if(IsPropZero(material, "_UseMain4thTex", animatedProps))
+                {
+                    material.SetTexture("_Main4thTex", null);
+                    material.SetTexture("_Main4thBlendMask", null);
+                    material.SetTexture("_Main4thDissolveMask", null);
+                    material.SetTexture("_Main4thDissolveNoiseMask", null);
+                }
+                if (IsPropZero(material, "_UseShadow", animatedProps))
                 {
                     material.SetTexture("_ShadowBlurMask", null);
                     material.SetTexture("_ShadowBorderMask", null);

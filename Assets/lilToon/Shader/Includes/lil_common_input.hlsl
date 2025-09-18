@@ -54,6 +54,9 @@ SAMPLER(lil_sampler_linear_clamp);
 #if !defined(LIL_FEATURE_Main3rdTex)
     #define LIL_FEATURE_Main3rdTex
 #endif
+#if !defined(LIL_FEATURE_Main4thTex)
+    #define LIL_FEATURE_Main4thTex
+#endif
 #if !defined(LIL_FEATURE_DitherTex)
     #define LIL_FEATURE_DitherTex
 #endif
@@ -185,9 +188,13 @@ CBUFFER_START(UnityPerMaterial)
     float4  _Color3rd;
     float4  _Main3rdTex_ST;
     float4  _Main3rdTex_ScrollRotate;
+    float4  _Color4th;
+    float4  _Main4thTex_ST;
+    float4  _Main4thTex_ScrollRotate;
     float   _MainGradationStrength;
     float   _Main2ndTexAngle;
     float   _Main3rdTexAngle;
+    float   _Main4thTexAngle;
     float   _AlphaMaskScale;
     float   _AlphaMaskValue;
     float   _AAStrength;
@@ -195,6 +202,8 @@ CBUFFER_START(UnityPerMaterial)
     uint    _Main2ndTex_UVMode;
     uint    _Main3rdTexBlendMode;
     uint    _Main3rdTex_UVMode;
+    uint    _Main4thTexBlendMode;
+    uint    _Main4thTex_UVMode;
     uint    _AlphaMaskMode;
     lilBool _UseMain2ndTex;
     lilBool _Main2ndTexIsDecal;
@@ -212,6 +221,14 @@ CBUFFER_START(UnityPerMaterial)
     lilBool _Main3rdTexShouldFlipMirror;
     lilBool _Main3rdTexShouldFlipCopy;
     lilBool _Main3rdTexIsMSDF;
+    lilBool _UseMain4thTex;
+    lilBool _Main4thTexIsDecal;
+    lilBool _Main4thTexIsLeftOnly;
+    lilBool _Main4thTexIsRightOnly;
+    lilBool _Main4thTexShouldCopy;
+    lilBool _Main4thTexShouldFlipMirror;
+    lilBool _Main4thTexShouldFlipCopy;
+    lilBool _Main4thTexIsMSDF;
 #elif defined(LIL_MULTI)
     float4  _LightDirectionOverride;
     float4  _BackfaceColor;
@@ -248,6 +265,20 @@ CBUFFER_START(UnityPerMaterial)
         float4  _Main3rdDissolvePos;
         float4  _Main3rdDissolveNoiseMask_ST;
         float4  _Main3rdDissolveNoiseMask_ScrollRotate;
+    #endif
+    #if defined(LIL_MULTI_INPUTS_MAIN4TH)
+        float4  _Color4th;
+        float4  _Main4thTex_ST;
+        float4  _Main4thTex_ScrollRotate;
+        float4  _Main4thDistanceFade;
+        float4  _Main4thTexDecalAnimation;
+        float4  _Main4thTexDecalSubParam;
+        float4  _Main4thDissolveMask_ST;
+        float4  _Main4thDissolveColor;
+        float4  _Main4thDissolveParams;
+        float4  _Main4thDissolvePos;
+        float4  _Main4thDissolveNoiseMask_ST;
+        float4  _Main4thDissolveNoiseMask_ScrollRotate;
     #endif
     #if defined(LIL_MULTI_INPUTS_SHADOW)
         float4  _ShadowColor;
@@ -411,6 +442,11 @@ CBUFFER_START(UnityPerMaterial)
         float   _Main3rdTexAngle;
         float   _Main3rdEnableLighting;
         float   _Main3rdDissolveNoiseStrength;
+    #endif
+    #if defined(LIL_MULTI_INPUTS_MAIN4TH)
+        float   _Main4thTexAngle;
+        float   _Main4thEnableLighting;
+        float   _Main4thDissolveNoiseStrength;
     #endif
     #if defined(LIL_MULTI_INPUTS_ALPHAMASK)
         float4  _AlphaMask_ST;
@@ -674,6 +710,12 @@ CBUFFER_START(UnityPerMaterial)
         uint    _Main3rdTex_UVMode;
         uint    _Main3rdTex_Cull;
     #endif
+    #if defined(LIL_MULTI_INPUTS_MAIN4TH)
+        uint    _Main4thTexBlendMode;
+        uint    _Main4thTexAlphaMode;
+        uint    _Main4thTex_UVMode;
+        uint    _Main4thTex_Cull;
+    #endif
     #if defined(LIL_MULTI_INPUTS_ALPHAMASK)
         uint    _AlphaMaskMode;
     #endif
@@ -746,6 +788,15 @@ CBUFFER_START(UnityPerMaterial)
         lilBool _Main3rdTexShouldFlipMirror;
         lilBool _Main3rdTexShouldFlipCopy;
     #endif
+    #if defined(LIL_MULTI_INPUTS_MAIN4TH)
+        lilBool _Main4thTexIsMSDF;
+        lilBool _Main4thTexIsDecal;
+        lilBool _Main4thTexIsLeftOnly;
+        lilBool _Main4thTexIsRightOnly;
+        lilBool _Main4thTexShouldCopy;
+        lilBool _Main4thTexShouldFlipMirror;
+        lilBool _Main4thTexShouldFlipCopy;
+    #endif
     #if defined(LIL_MULTI_INPUTS_SHADOW)
         lilBool _ShadowPostAO;
     #endif
@@ -799,6 +850,7 @@ CBUFFER_START(UnityPerMaterial)
     #if defined(LIL_MULTI_INPUTS_AUDIOLINK)
         lilBool _AudioLink2Main2nd;
         lilBool _AudioLink2Main3rd;
+        lilBool _AudioLink2Main4th;
         lilBool _AudioLink2Emission;
         lilBool _AudioLink2Emission2nd;
         lilBool _AudioLink2Vertex;
@@ -842,6 +894,10 @@ TEXTURE2D(_Main3rdTex);
 TEXTURE2D(_Main3rdBlendMask);
 TEXTURE2D(_Main3rdDissolveMask);
 TEXTURE2D(_Main3rdDissolveNoiseMask);
+TEXTURE2D(_Main4thTex);
+TEXTURE2D(_Main4thBlendMask);
+TEXTURE2D(_Main4thDissolveMask);
+TEXTURE2D(_Main4thDissolveNoiseMask);
 TEXTURE2D(_AlphaMask);
 TEXTURE2D(_BumpMap);
 TEXTURE2D(_Bump2ndMap);
@@ -893,6 +949,7 @@ TEXTURE2D(_TriMask);
 SAMPLER(sampler_MainTex);
 SAMPLER(sampler_Main2ndTex);
 SAMPLER(sampler_Main3rdTex);
+SAMPLER(sampler_Main4thTex);
 SAMPLER(sampler_EmissionMap);
 SAMPLER(sampler_Emission2ndMap);
 SAMPLER(sampler_AudioLinkMask);

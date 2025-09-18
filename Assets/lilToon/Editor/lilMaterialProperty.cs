@@ -99,18 +99,18 @@ namespace lilToon
             propertyName = null;
         }
 
-        public lilMaterialProperty(string name, params PropertyBlock[] inBrocks)
+        public lilMaterialProperty(string name, params PropertyBlock[] inBlocks)
         {
             p = null;
-            blocks = inBrocks.ToList();
+            blocks = inBlocks.ToList();
             isTexture = false;
             propertyName = name;
         }
 
-        public lilMaterialProperty(string name, bool isTex, params PropertyBlock[] inBrocks)
+        public lilMaterialProperty(string name, bool isTex, params PropertyBlock[] inBlocks)
         {
             p = null;
-            blocks = inBrocks.ToList();
+            blocks = inBlocks.ToList();
             isTexture = isTex;
             propertyName = name;
         }

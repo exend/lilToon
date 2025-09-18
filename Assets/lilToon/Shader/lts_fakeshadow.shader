@@ -97,6 +97,7 @@ Shader "_lil/[Optional] lilToonFakeShadow"
             #define LIL_FEATURE_MAIN_GRADATION_MAP
             #define LIL_FEATURE_MAIN2ND
             #define LIL_FEATURE_MAIN3RD
+            #define LIL_FEATURE_MAIN4TH
             #define LIL_FEATURE_DECAL
             #define LIL_FEATURE_ANIMATE_DECAL
             #define LIL_FEATURE_LAYER_DISSOLVE
@@ -145,6 +146,10 @@ Shader "_lil/[Optional] lilToonFakeShadow"
             #define LIL_FEATURE_Main3rdBlendMask
             #define LIL_FEATURE_Main3rdDissolveMask
             #define LIL_FEATURE_Main3rdDissolveNoiseMask
+            #define LIL_FEATURE_Main4thTex
+            #define LIL_FEATURE_Main4thBlendMask
+            #define LIL_FEATURE_Main4thDissolveMask
+            #define LIL_FEATURE_Main4thDissolveNoiseMask
             #define LIL_FEATURE_AlphaMask
             #define LIL_FEATURE_BumpMap
             #define LIL_FEATURE_Bump2ndMap

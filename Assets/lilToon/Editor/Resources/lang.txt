@@ -185,6 +185,7 @@ sMainColorAlpha	Main Color / Alpha	メインカラー / 透過	메인 컬러 / �
 sMainColor	Main Color	メインカラー	메인 컬러	主色	主色
 sMainColor2nd	Main Color 2nd	メインカラー2nd	메인 컬러 2nd	第二主色	主色2nd
 sMainColor3rd	Main Color 3rd	メインカラー3rd	메인 컬러 3rd	第三主色	主色3rd
+sMainColor4th	Main Color 4th	Main Color 4th	Main Color 4th	Main Color 4th	Main Color 4th
 sColorAdjust	Color Adjust	色調補正	색조 보정	色调校正	色調校正
 sGradationMap	Gradation Map	グラデーションマップ	그라디언트 맵	渐变映射	漸變映射
 sNotAlphaIsTransparency	This texture is not marked as AlphaIsTransparency	このテクスチャはAlphaIsTransparencyとして設定されていません	이 텍스처는 Alpha Is Transparency로 설정되어 있지 않습니다	此纹理未被设置为 Alpha 是透明的	此紋理未被設置為AlphaIsTransparency
@@ -388,6 +389,7 @@ sBakeAll	Bake all layer	全て焼き込み	모든 굽기	烘培所有层	烘烤�
 sBake1st	Bake Color Shift	色替えを焼き込み	색상 기준을 굽기	烘培颜色转移	烘烤顏色轉移
 sBake2nd	Bake 2nd Layer	レイヤー2を焼き込み	레이어 2를 굽기	烘培第二层	烘烤第二層
 sBake3rd	Bake 3rd layer	レイヤー3を焼き込み	레이어 3을 굽기	烘培第三层	烘焙第三層
+sBake4th	Bake 4th layer	Bake 4th layer	Bake 4th layer	Bake 4th layer	Bake 4th layer
 sBakeAlphamask	Bake Alphamask	アルファマスクを焼き込み	알파 마스크를 굽기	烘焙 Alpha 蒙版	烘焙Alphamask
 sSelectAlphamask	Select Alphamask	アルファマスクを選択してください	알파 마스크를 선택하십시오	选择Alpha 蒙版	選擇Alphamask
 sRemoveUnused	Remove unused textures	未使用のテクスチャを外す	미사용 텍스처 해제	移除未使用的纹理	移除未使用的紋理

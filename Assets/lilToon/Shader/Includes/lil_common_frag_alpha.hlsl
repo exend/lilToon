@@ -53,6 +53,14 @@
         OVERRIDE_MAIN3RD
     #endif
 
+    // 4th
+    BEFORE_MAIN4TH
+    #if defined(LIL_FEATURE_MAIN4TH)
+        float main4thDissolveAlpha = 0.0;
+        float4 color4th = 1.0;
+        OVERRIDE_MAIN4TH
+    #endif
+
     //------------------------------------------------------------------------------------------------------------------------------
     // Alpha Mask
     BEFORE_ALPHAMASK

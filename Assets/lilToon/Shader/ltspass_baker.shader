@@ -45,6 +45,22 @@ Shader "Hidden/ltsother_baker"
         [lilEnum]       _Main3rdTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply", Int) = 0
 
         //----------------------------------------------------------------------------------------------------------------------
+        // Main4th
+        [lilToggleLeft] _UseMain4thTex              ("Use Main 4th", Int) = 0
+                        _Color4th                   ("Color", Color) = (1,1,1,1)
+                        _Main4thTex                 ("Texture", 2D) = "white" {}
+        [lilAngle]      _Main4thTexAngle            ("Angle", Float) = 0
+        [lilToggle]     _Main4thTexIsDecal          ("As Decal", Int) = 0
+        [lilToggle]     _Main4thTexIsLeftOnly       ("Left Only", Int) = 0
+        [lilToggle]     _Main4thTexIsRightOnly      ("Right Only", Int) = 0
+        [lilToggle]     _Main4thTexShouldCopy       ("Copy", Int) = 0
+        [lilToggle]     _Main4thTexShouldFlipMirror ("Flip Mirror", Int) = 0
+        [lilToggle]     _Main4thTexShouldFlipCopy   ("Flip Copy", Int) = 0
+        [lilToggle]     _Main4thTexIsMSDF           ("As MSDF", Int) = 0
+        [NoScaleOffset] _Main4thBlendMask           ("Mask", 2D) = "white" {}
+        [lilEnum]       _Main4thTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply", Int) = 0
+
+        //----------------------------------------------------------------------------------------------------------------------
         // Alpha Mask
         [lilEnumLabel]  _AlphaMaskMode              ("AlphaMask|", Int) = 0
                         _AlphaMask                  ("AlphaMask", 2D) = "white" {}
@@ -77,6 +93,7 @@ Shader "Hidden/ltsother_baker"
             #define LIL_FEATURE_MAIN_GRADATION_MAP
             #define LIL_FEATURE_MAIN2ND
             #define LIL_FEATURE_MAIN3RD
+            #define LIL_FEATURE_MAIN4TH
             #define LIL_FEATURE_DECAL
             #define LIL_FEATURE_ANIMATE_DECAL
             #define LIL_FEATURE_LAYER_DISSOLVE
@@ -125,6 +142,10 @@ Shader "Hidden/ltsother_baker"
             #define LIL_FEATURE_Main3rdBlendMask
             #define LIL_FEATURE_Main3rdDissolveMask
             #define LIL_FEATURE_Main3rdDissolveNoiseMask
+            #define LIL_FEATURE_Main4thTex
+            #define LIL_FEATURE_Main4thBlendMask
+            #define LIL_FEATURE_Main4thDissolveMask
+            #define LIL_FEATURE_Main4thDissolveNoiseMask
             #define LIL_FEATURE_AlphaMask
             #define LIL_FEATURE_BumpMap
             #define LIL_FEATURE_Bump2ndMap
@@ -313,6 +334,14 @@ Shader "Hidden/ltsother_baker"
                     {
                         _Color3rd *= LIL_GET_SUBTEX(_Main3rdTex,input.uv0);
                         col.rgb = lilBlendColor(col.rgb, _Color3rd.rgb, LIL_SAMPLE_2D(_Main3rdBlendMask,sampler_MainTex,input.uv0).r * _Color3rd.a, _Main3rdTexBlendMode);
+                    }
+
+                    // 4th
+                    UNITY_BRANCH
+                    if(_UseMain4thTex)
+                    {
+                        _Color4th *= LIL_GET_SUBTEX(_Main4thTex,input.uv0);
+                        col.rgb = lilBlendColor(col.rgb, _Color4th.rgb, LIL_SAMPLE_2D(_Main4thBlendMask,sampler_MainTex,input.uv0).r * _Color4th.a, _Main4thTexBlendMode);
                     }
                 #endif
 

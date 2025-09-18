@@ -54,6 +54,7 @@ namespace lilToon
         MainColor1st,
         MainColor2nd,
         MainColor3rd,
+        MainColor4th,
         AlphaMask,
         Shadow,
         RimShade,

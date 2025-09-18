@@ -70,6 +70,10 @@
     #define BEFORE_MAIN3RD
 #endif
 
+#if !defined(BEFORE_MAIN4TH)
+    #define BEFORE_MAIN4TH
+#endif
+
 #if !defined(BEFORE_SHADOW)
     #define BEFORE_SHADOW
 #endif
@@ -908,6 +912,102 @@
 #if !defined(OVERRIDE_MAIN3RD)
     #define OVERRIDE_MAIN3RD \
         lilGetMain3rd(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex));
+#endif
+
+//------------------------------------------------------------------------------------------------------------------------------
+// Main 4th
+#if defined(LIL_FEATURE_MAIN4TH) && !defined(LIL_LITE)
+    void lilGetMain4th(inout lilFragData fd, inout float4 color4th, inout float main4thDissolveAlpha LIL_SAMP_IN_FUNC(samp))
+    {
+        #if !(defined(LIL_FEATURE_DECAL) && defined(LIL_FEATURE_ANIMATE_DECAL))
+            float4 _Main4thTexDecalAnimation = 0.0;
+            float4 _Main4thTexDecalSubParam = 0.0;
+        #endif
+        #if !defined(LIL_FEATURE_DECAL)
+            bool _Main4thTexIsDecal = false;
+            bool _Main4thTexIsLeftOnly = false;
+            bool _Main4thTexIsRightOnly = false;
+            bool _Main4thTexShouldCopy = false;
+            bool _Main4thTexShouldFlipMirror = false;
+            bool _Main4thTexShouldFlipCopy = false;
+        #endif
+        color4th = _Color4th;
+        if(_UseMain4thTex)
+        {
+            float2 uv4th = fd.uv0;
+            if(_Main4thTex_UVMode == 1) uv4th = fd.uv1;
+            if(_Main4thTex_UVMode == 2) uv4th = fd.uv2;
+            if(_Main4thTex_UVMode == 3) uv4th = fd.uv3;
+            if(_Main4thTex_UVMode == 4) uv4th = fd.uvMat;
+            #if defined(LIL_FEATURE_Main4thTex)
+                color4th *= LIL_GET_SUBTEX(_Main4thTex, uv4th);
+            #endif
+            #if defined(LIL_FEATURE_Main4thBlendMask)
+                color4th.a *= LIL_SAMPLE_2D(_Main4thBlendMask, samp, fd.uvMain).r;
+            #endif
+
+            #if defined(LIL_FEATURE_Main4thDissolveMask)
+                #define _Main4thDissolveMaskEnabled true
+            #else
+                #define _Main4thDissolveMaskEnabled false
+            #endif
+
+            #if defined(LIL_FEATURE_LAYER_DISSOLVE)
+                #if defined(LIL_FEATURE_Main4thDissolveNoiseMask)
+                    lilCalcDissolveWithNoise(
+                        color4th.a,
+                        main4thDissolveAlpha,
+                        fd.uv0,
+                        fd.positionOS,
+                        _Main4thDissolveParams,
+                        _Main4thDissolvePos,
+                        _Main4thDissolveMask,
+                        _Main4thDissolveMask_ST,
+                        _Main4thDissolveMaskEnabled,
+                        _Main4thDissolveNoiseMask,
+                        _Main4thDissolveNoiseMask_ST,
+                        _Main4thDissolveNoiseMask_ScrollRotate,
+                        _Main4thDissolveNoiseStrength,
+                        samp
+                    );
+                #else
+                    lilCalcDissolve(
+                        color4th.a,
+                        main4thDissolveAlpha,
+                        fd.uv0,
+                        fd.positionOS,
+                        _Main4thDissolveParams,
+                        _Main4thDissolvePos,
+                        _Main4thDissolveMask,
+                        _Main4thDissolveMask_ST,
+                        _Main4thDissolveMaskEnabled,
+                        samp
+                    );
+                #endif
+            #endif
+            #if defined(LIL_FEATURE_AUDIOLINK)
+                if(_AudioLink2Main4th) color4th.a *= fd.audioLinkValue;
+            #endif
+            color4th.a = lerp(color4th.a, color4th.a * saturate((fd.depth - _Main4thDistanceFade.x) / (_Main4thDistanceFade.y - _Main4thDistanceFade.x)), _Main4thDistanceFade.z);
+            if(_Main4thTex_Cull == 1 && fd.facing > 0 || _Main4thTex_Cull == 2 && fd.facing < 0) color4th.a = 0;
+            #if LIL_RENDER != 0
+                if(_Main4thTexAlphaMode != 0)
+                {
+                    if(_Main4thTexAlphaMode == 1) fd.col.a = color4th.a;
+                    if(_Main4thTexAlphaMode == 2) fd.col.a = fd.col.a * color4th.a;
+                    if(_Main4thTexAlphaMode == 3) fd.col.a = saturate(fd.col.a + color4th.a);
+                    if(_Main4thTexAlphaMode == 4) fd.col.a = saturate(fd.col.a - color4th.a);
+                    color4th.a = 1;
+                }
+            #endif
+            fd.col.rgb = lilBlendColor(fd.col.rgb, color4th.rgb, color4th.a * _Main4thEnableLighting, _Main4thTexBlendMode);
+        }
+    }
+#endif
+
+#if !defined(OVERRIDE_MAIN4TH)
+    #define OVERRIDE_MAIN4TH \
+        lilGetMain4th(fd, color4th, main4thDissolveAlpha LIL_SAMP_IN(sampler_MainTex));
 #endif
 
 //------------------------------------------------------------------------------------------------------------------------------
