@@ -91,7 +91,7 @@ SAMPLER(lil_sampler_linear_clamp);
 // ScrollRotate     x:scroll y:scroll z:angle w:rotation
 // Blink            x:strength y:type z:speed w:offset
 // HSVG             x:hue y:saturation z:value w:gamma
-// BlendMode        0:normal 1:add 2:screen 3:multiply
+// BlendMode        0:normal 1:add 2:screen 3:multiply 4:overlay
 
 // bool does not work in cbuffer
 #if !defined(lilBool)

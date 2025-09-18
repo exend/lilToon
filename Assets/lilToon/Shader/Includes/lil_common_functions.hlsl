@@ -308,10 +308,11 @@ float3 lilBlendColor(float3 dstCol, float3 srcCol, float3 srcA, uint blendMode)
     float3 ad = dstCol + srcCol;
     float3 mu = dstCol * srcCol;
     float3 outCol;
-    if(blendMode == 0) outCol = srcCol;               // Normal
-    if(blendMode == 1) outCol = ad;                   // Add
-    if(blendMode == 2) outCol = max(ad - mu, dstCol); // Screen
-    if(blendMode == 3) outCol = mu;                   // Multiply
+    if(blendMode == 0) outCol = srcCol;                                             // Normal
+    if(blendMode == 1) outCol = ad;                                                 // Add
+    if(blendMode == 2) outCol = max(ad - mu, dstCol);                               // Screen
+    if(blendMode == 3) outCol = mu;                                                 // Multiply
+    if(blendMode == 4) outCol = dstCol < .5f ? mu * 2.f : (ad - mu) * 2.f - 1.f;    // Overlay
     return lerp(dstCol, outCol, srcA);
 }
 

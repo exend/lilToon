@@ -35,7 +35,8 @@ namespace lilToon
         Alpha,
         Add,
         Screen,
-        Mul
+        Mul,
+        Overlay
     }
 
     public enum LightingPreset

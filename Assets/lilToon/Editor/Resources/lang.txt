@@ -29,6 +29,7 @@ sBlendModeNormal	Normal	通常	표준	Normal	Normal
 sBlendModeAdd	Add	加算	가산	Add	Add
 sBlendModeScreen	Screen	スクリーン	스크린	Screen	Screen
 sBlendModeMul	Multiply	乗算	곱하기	Multiply	Multiply
+sBlendModeOverlay	Overlay	Overlay	Overlay	Overlay	Overlay
 sBorder	Border	範囲	범위	边界	邊界
 sBorderAO	AO & Border	AOと影範囲	AO과 그림자 범위	AO & 边界	AO & 邊界
 sBorderR	Border (R)	範囲 (R)	범위 (R)	边界 (R)	邊界 (R)
