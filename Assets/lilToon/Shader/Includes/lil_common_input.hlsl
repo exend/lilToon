@@ -181,7 +181,10 @@ CBUFFER_START(UnityPerMaterial)
 #elif defined(LIL_BAKER)
     float4  _Color;
     float4  _MainTex_ST;
-    float4  _MainTexHSVG;
+    float   _MainTexHue;
+    float   _MainTexSaturation;
+    float   _MainTexValue;
+    float   _MainTexGamma;
     float4  _Color2nd;
     float4  _Main2ndTex_ST;
     float4  _Main2ndTex_ScrollRotate;
@@ -236,7 +239,10 @@ CBUFFER_START(UnityPerMaterial)
     float4  _MainTex_ST;
     float4  _MainTex_ScrollRotate;
     #if defined(LIL_MULTI_INPUTS_MAIN_TONECORRECTION)
-        float4  _MainTexHSVG;
+        float _MainTexHue;
+        float _MainTexSaturation;
+        float _MainTexValue;
+        float _MainTexGamma;
     #endif
     #if defined(LIL_MULTI_INPUTS_MAIN2ND)
         float4  _Color2nd;

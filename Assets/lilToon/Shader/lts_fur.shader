@@ -42,7 +42,10 @@ Shader "Hidden/lilToonFur"
         [lilHDR] [MainColor] _Color                 ("sColor", Color) = (1,1,1,1)
         [MainTexture]   _MainTex                    ("Texture", 2D) = "white" {}
         [lilUVAnim]     _MainTex_ScrollRotate       ("sScrollRotates", Vector) = (0,0,0,0)
-        [lilHSVG]       _MainTexHSVG                ("sHSVGs", Vector) = (0,1,1,1)
+                        _MainTexHue                 ("Hue", Range(-0.5, 0.5)) = 0
+                        _MainTexSaturation          ("Saturation", Range(0, 2)) = 1
+                        _MainTexValue               ("Value", Range(0, 2)) = 1
+                        _MainTexGamma               ("Gamma", Range(0, 2)) = 1
                         _MainGradationStrength      ("Gradation Strength", Range(0, 1)) = 0
         [NoScaleOffset] _MainGradationTex           ("Gradation Map", 2D) = "white" {}
         [NoScaleOffset] _MainColorAdjustMask        ("Adjust Mask", 2D) = "white" {}

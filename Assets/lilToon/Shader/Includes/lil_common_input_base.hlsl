@@ -19,7 +19,10 @@ float4  _MainTex_ST;
     float4  _MainTex_ScrollRotate;
 #endif
 #if defined(LIL_FEATURE_MAIN_TONE_CORRECTION)
-    float4  _MainTexHSVG;
+    float  _MainTexHue;
+    float  _MainTexSaturation;
+    float  _MainTexValue;
+    float  _MainTexGamma;
 #endif
 
 // Main2nd

@@ -568,10 +568,33 @@ namespace lilToon
             }
         }
 
+        public static void ToneCorrectionGUI(MaterialEditor m_MaterialEditor, (MaterialProperty h, MaterialProperty s, MaterialProperty v, MaterialProperty g) props)
+        {
+            LocalizedProperty(m_MaterialEditor, props.h);
+            LocalizedProperty(m_MaterialEditor, props.s);
+            LocalizedProperty(m_MaterialEditor, props.v);
+            LocalizedProperty(m_MaterialEditor, props.g);
+            // Reset
+            if (Button(GetLoc("sReset")))
+            {
+                props.h.floatValue = lilConstants.defaultHSVG.x;
+                props.s.floatValue = lilConstants.defaultHSVG.y;
+                props.v.floatValue = lilConstants.defaultHSVG.z;
+                props.g.floatValue = lilConstants.defaultHSVG.w;
+            }
+        }
+
         public static void ToneCorrectionGUI(MaterialEditor m_MaterialEditor, MaterialProperty hsvg, int indent)
         {
             EditorGUI.indentLevel += indent;
             ToneCorrectionGUI(m_MaterialEditor, hsvg);
+            EditorGUI.indentLevel -= indent;
+        }
+
+        public static void ToneCorrectionGUI(MaterialEditor m_MaterialEditor, (MaterialProperty h, MaterialProperty s, MaterialProperty v, MaterialProperty g) props, int indent)
+        {
+            EditorGUI.indentLevel += indent;
+            ToneCorrectionGUI(m_MaterialEditor, props);
             EditorGUI.indentLevel -= indent;
         }
 

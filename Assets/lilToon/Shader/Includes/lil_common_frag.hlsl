@@ -318,7 +318,7 @@
     // Tone correction
     #if defined(LIL_FEATURE_MAIN_TONE_CORRECTION)
         #define LIL_MAIN_TONECORRECTION \
-            fd.col.rgb = lilToneCorrection(fd.col.rgb, _MainTexHSVG);
+            fd.col.rgb = lilToneCorrection(fd.col.rgb, float4(_MainTexHue, _MainTexSaturation, _MainTexValue, _MainTexGamma));
     #else
         #define LIL_MAIN_TONECORRECTION
     #endif

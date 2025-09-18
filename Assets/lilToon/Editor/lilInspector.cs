@@ -339,7 +339,10 @@ namespace lilToon
 
         private readonly lilMaterialProperty mainColor              = new lilMaterialProperty("_Color", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
         private readonly lilMaterialProperty mainTex                = new lilMaterialProperty("_MainTex", true, PropertyBlock.MainColor, PropertyBlock.MainColor1st);
-        private readonly lilMaterialProperty mainTexHSVG            = new lilMaterialProperty("_MainTexHSVG", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
+        private readonly lilMaterialProperty mainTexHue             = new lilMaterialProperty("_MainTexHue", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
+        private readonly lilMaterialProperty mainTexSaturation      = new lilMaterialProperty("_MainTexSaturation", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
+        private readonly lilMaterialProperty mainTexValue           = new lilMaterialProperty("_MainTexValue", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
+        private readonly lilMaterialProperty mainTexGamma           = new lilMaterialProperty("_MainTexGamma", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
         private readonly lilMaterialProperty mainGradationStrength  = new lilMaterialProperty("_MainGradationStrength", PropertyBlock.MainColor, PropertyBlock.MainColor1st);
         private readonly lilMaterialProperty mainGradationTex       = new lilMaterialProperty("_MainGradationTex", true, PropertyBlock.MainColor, PropertyBlock.MainColor1st);
         private readonly lilMaterialProperty mainColorAdjustMask    = new lilMaterialProperty("_MainColorAdjustMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor1st);
@@ -1009,7 +1012,10 @@ namespace lilToon
 
                 mainColor,
                 mainTex,
-                mainTexHSVG,
+                mainTexHue,
+                mainTexSaturation,
+                mainTexValue,
+                mainTexGamma,
                 mainGradationStrength,
                 mainGradationTex,
                 mainColorAdjustMask,
@@ -5197,7 +5203,7 @@ namespace lilToon
                 LocalizedPropertyTexture(maskBlendContent, mainColorAdjustMask);
                 EditorGUI.indentLevel++;
                 EditorGUILayout.LabelField("HSV / Gamma", boldLabel);
-                ToneCorrectionGUI(mainTexHSVG, 1);
+                ToneCorrectionGUI((h: mainTexHue, s: mainTexSaturation, v: mainTexValue, g: mainTexGamma), 1);
                 //EditorGUILayout.LabelField(GetLoc("sGradationMap"), boldLabel);
                 //LocalizedProperty(mainGradationStrength);
                 lilEditorGUI.DrawLine();
@@ -6313,6 +6319,11 @@ namespace lilToon
             lilEditorGUI.ToneCorrectionGUI(m_MaterialEditor, hsvg, indent);
         }
 
+        private void ToneCorrectionGUI((MaterialProperty h, MaterialProperty s, MaterialProperty v, MaterialProperty g) props, int indent)
+        {
+            lilEditorGUI.ToneCorrectionGUI(m_MaterialEditor, props, indent);
+        }
+
         private void UVSettingGUI(MaterialProperty uvst)
         {
             lilEditorGUI.UVSettingGUI(m_MaterialEditor, uvst);
@@ -6428,12 +6439,13 @@ namespace lilToon
         #region
         private void TextureBake(Material material, int bakeType)
         {
-            bool shouldNotBakeColor = (bakeType == 1 || bakeType == 5) && mainColor.colorValue == Color.white && mainTexHSVG.vectorValue == lilConstants.defaultHSVG && mainGradationStrength.floatValue == 0.0;
+            bool hasMainTexHSVGDefaultValues = Vector4.Distance(new Vector4(mainTexHue.floatValue, mainTexSaturation.floatValue, mainTexValue.floatValue, mainTexGamma.floatValue), lilConstants.defaultHSVG) < 0.000001;
+            bool shouldNotBakeColor = (bakeType == 1 || bakeType == 5) && mainColor.colorValue == Color.white && hasMainTexHSVGDefaultValues && mainGradationStrength.floatValue == 0.0;
             bool cannotBake1st = mainTex.textureValue == null;
             bool shouldNotBake2nd = (bakeType == 2 || bakeType == 6) && useMain2ndTex.floatValue == 0.0;
             bool shouldNotBake3rd = (bakeType == 3 || bakeType == 7) && useMain3rdTex.floatValue == 0.0;
             bool shouldNotBake4th = (bakeType == 4 || bakeType == 8) && useMain4thTex.floatValue == 0.0;
-            bool shouldNotBakeAll = bakeType == 0 && mainColor.colorValue == Color.white && mainTexHSVG.vectorValue == lilConstants.defaultHSVG && mainGradationStrength.floatValue == 0.0 && useMain2ndTex.floatValue == 0.0 && useMain3rdTex.floatValue == 0.0 && useMain4thTex.floatValue == 0.0;
+            bool shouldNotBakeAll = bakeType == 0 && mainColor.colorValue == Color.white && hasMainTexHSVGDefaultValues && mainGradationStrength.floatValue == 0.0 && useMain2ndTex.floatValue == 0.0 && useMain3rdTex.floatValue == 0.0 && useMain4thTex.floatValue == 0.0;
             if(cannotBake1st)
             {
                 EditorUtility.DisplayDialog(GetLoc("sDialogCannotBake"), GetLoc("sDialogSetMainTex"), GetLoc("sOK"));
@@ -6477,10 +6489,13 @@ namespace lilToon
                 var srcMask3 = new Texture2D(2, 2);
                 var srcMask4 = new Texture2D(2, 2);
 
-                hsvgMaterial.SetColor(mainColor.name,           mainColor.colorValue);
-                hsvgMaterial.SetVector(mainTexHSVG.name,        mainTexHSVG.vectorValue);
+                hsvgMaterial.SetColor(mainColor.name,             mainColor.colorValue);
+                hsvgMaterial.SetFloat(mainTexHue.name,            mainTexHue.floatValue);
+                hsvgMaterial.SetFloat(mainTexSaturation.name,     mainTexSaturation.floatValue);
+                hsvgMaterial.SetFloat(mainTexValue.name,          mainTexValue.floatValue);
+                hsvgMaterial.SetFloat(mainTexGamma.name,          mainTexGamma.floatValue);
                 hsvgMaterial.SetFloat(mainGradationStrength.name, mainGradationStrength.floatValue);
-                hsvgMaterial.SetTexture(mainGradationTex.name, mainGradationTex.textureValue);
+                hsvgMaterial.SetTexture(mainGradationTex.name,    mainGradationTex.textureValue);
                 hsvgMaterial.SetTexture(mainColorAdjustMask.name, mainColorAdjustMask.textureValue);
 
                 path = AssetDatabase.GetAssetPath(material.GetTexture(mainTex.name));
@@ -6626,7 +6641,10 @@ namespace lilToon
                 outTexture = lilTextureUtils.SaveTextureToPng(material, outTexture, mainTex.name);
                 if(outTexture != mainTex.textureValue)
                 {
-                    mainTexHSVG.vectorValue = lilConstants.defaultHSVG;
+                    mainTexHue.floatValue = lilConstants.defaultHSVG.x;
+                    mainTexSaturation.floatValue = lilConstants.defaultHSVG.y;
+                    mainTexValue.floatValue = lilConstants.defaultHSVG.z;
+                    mainTexGamma.floatValue = lilConstants.defaultHSVG.w;
                     mainColor.colorValue = Color.white;
                     mainGradationStrength.floatValue = 0.0f;
                     mainGradationTex.textureValue = null;
@@ -6663,7 +6681,12 @@ namespace lilToon
 
         private Texture AutoBakeMainTexture(Material material)
         {
-            bool shouldNotBakeAll = mainColor.colorValue == Color.white && mainTexHSVG.vectorValue == lilConstants.defaultHSVG && mainGradationStrength.floatValue == 0.0 && useMain2ndTex.floatValue == 0.0 && useMain3rdTex.floatValue == 0.0 && useMain4thTex.floatValue == 0.0;
+            bool shouldNotBakeAll = mainColor.colorValue == Color.white
+                && Vector4.Distance(new Vector4(mainTexHue.floatValue, mainTexSaturation.floatValue, mainTexValue.floatValue, mainTexGamma.floatValue), lilConstants.defaultHSVG) < 0.000001
+                && mainGradationStrength.floatValue == 0.0
+                && useMain2ndTex.floatValue == 0.0
+                && useMain3rdTex.floatValue == 0.0
+                && useMain4thTex.floatValue == 0.0;
             if(!shouldNotBakeAll && EditorUtility.DisplayDialog(GetLoc("sDialogRunBake"), GetLoc("sDialogBakeMain"), GetLoc("sYes"), GetLoc("sNo")))
             {
                 bool bake2nd = useMain2ndTex.floatValue != 0.0;
@@ -6683,10 +6706,13 @@ namespace lilToon
                 var srcMask3 = new Texture2D(2, 2);
                 var srcMask4 = new Texture2D(2, 2);
 
-                hsvgMaterial.SetColor(mainColor.name,           Color.white);
-                hsvgMaterial.SetVector(mainTexHSVG.name,        mainTexHSVG.vectorValue);
+                hsvgMaterial.SetColor(mainColor.name,             Color.white);
+                hsvgMaterial.SetFloat(mainTexHue.name,            mainTexHue.floatValue);
+                hsvgMaterial.SetFloat(mainTexSaturation.name,     mainTexSaturation.floatValue);
+                hsvgMaterial.SetFloat(mainTexValue.name,          mainTexValue.floatValue);
+                hsvgMaterial.SetFloat(mainTexGamma.name,          mainTexGamma.floatValue);
                 hsvgMaterial.SetFloat(mainGradationStrength.name, mainGradationStrength.floatValue);
-                hsvgMaterial.SetTexture(mainGradationTex.name, mainGradationTex.textureValue);
+                hsvgMaterial.SetTexture(mainGradationTex.name,    mainGradationTex.textureValue);
                 hsvgMaterial.SetTexture(mainColorAdjustMask.name, mainColorAdjustMask.textureValue);
 
                 path = AssetDatabase.GetAssetPath(material.GetTexture(mainTex.name));
@@ -6870,7 +6896,10 @@ namespace lilToon
                 var srcMask2 = new Texture2D(2, 2);
 
                 hsvgMaterial.SetColor(mainColor.name,                   Color.white);
-                hsvgMaterial.SetVector(mainTexHSVG.name,                lilConstants.defaultHSVG);
+                hsvgMaterial.SetFloat(mainTexHue.name,                  lilConstants.defaultHSVG.x);
+                hsvgMaterial.SetFloat(mainTexSaturation.name,           lilConstants.defaultHSVG.y);
+                hsvgMaterial.SetFloat(mainTexValue.name,                lilConstants.defaultHSVG.z);
+                hsvgMaterial.SetFloat(mainTexGamma.name,                lilConstants.defaultHSVG.w);
                 hsvgMaterial.SetFloat(useMain2ndTex.name,               1.0f);
                 hsvgMaterial.SetFloat(useMain3rdTex.name,               1.0f);
                 hsvgMaterial.SetColor(mainColor3rd.name,                new Color(1.0f,1.0f,1.0f,shadowMainStrength.floatValue));
@@ -6970,7 +6999,10 @@ namespace lilToon
                 var srcTexture = new Texture2D(2, 2);
 
                 hsvgMaterial.SetColor(mainColor.name,           matcapColor.colorValue);
-                hsvgMaterial.SetVector(mainTexHSVG.name,        lilConstants.defaultHSVG);
+                hsvgMaterial.SetFloat(mainTexHue.name,          lilConstants.defaultHSVG.x);
+                hsvgMaterial.SetFloat(mainTexSaturation.name,   lilConstants.defaultHSVG.y);
+                hsvgMaterial.SetFloat(mainTexValue.name,        lilConstants.defaultHSVG.z);
+                hsvgMaterial.SetFloat(mainTexGamma.name,        lilConstants.defaultHSVG.w);
 
                 path = AssetDatabase.GetAssetPath(material.GetTexture(matcapTex.name));
                 if(!string.IsNullOrEmpty(path))
@@ -7086,7 +7118,10 @@ namespace lilToon
 
             hsvgMaterial.EnableKeyword("_ALPHAMASK");
             hsvgMaterial.SetColor(mainColor.name,           Color.white);
-            hsvgMaterial.SetVector(mainTexHSVG.name,        lilConstants.defaultHSVG);
+            hsvgMaterial.SetFloat(mainTexHue.name,          lilConstants.defaultHSVG.x);
+            hsvgMaterial.SetFloat(mainTexSaturation.name,   lilConstants.defaultHSVG.y);
+            hsvgMaterial.SetFloat(mainTexValue.name,        lilConstants.defaultHSVG.z);
+            hsvgMaterial.SetFloat(mainTexGamma.name,        lilConstants.defaultHSVG.w);
             hsvgMaterial.SetFloat(alphaMaskMode.name,       alphaMaskMode.floatValue);
             hsvgMaterial.SetFloat(alphaMaskScale.name,      alphaMaskScale.floatValue);
             hsvgMaterial.SetFloat(alphaMaskValue.name,      alphaMaskValue.floatValue);
@@ -7146,7 +7181,10 @@ namespace lilToon
                 var srcTexture = new Texture2D(2, 2);
 
                 hsvgMaterial.SetColor(mainColor.name,                   Color.white);
-                hsvgMaterial.SetVector(mainTexHSVG.name,                outlineTexHSVG.vectorValue);
+                hsvgMaterial.SetFloat(mainTexHue.name,                  outlineTexHSVG.vectorValue.x);
+                hsvgMaterial.SetFloat(mainTexSaturation.name,           outlineTexHSVG.vectorValue.y);
+                hsvgMaterial.SetFloat(mainTexValue.name,                outlineTexHSVG.vectorValue.z);
+                hsvgMaterial.SetFloat(mainTexGamma.name,                outlineTexHSVG.vectorValue.w);
 
                 path = AssetDatabase.GetAssetPath(material.GetTexture(outlineTex.name));
                 if(!string.IsNullOrEmpty(path))

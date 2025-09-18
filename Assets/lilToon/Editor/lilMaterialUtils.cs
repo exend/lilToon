@@ -374,8 +374,8 @@ namespace lilToon
             bool useDissolve = IsFeatureOnVectorX(material, "_DissolveParams");
             bool useMain2ndDissolve = IsFeatureOnVectorX(material, "_Main2ndDissolveParams");
             bool useMain3rdDissolve = IsFeatureOnVectorX(material, "_Main3rdDissolveParams");
-            bool useMain4thDissolve = IsFeatureOnVectorX(material, "_Main3rdDissolveParams");
-            bool useMainTexHSVG = IsFeatureOnHSVG(material, "_MainTexHSVG");
+            bool useMain4thDissolve = IsFeatureOnVectorX(material, "_Main4thDissolveParams");
+            bool useMainTexHSVG = IsFeatureOnHSVG(material, (h: "_MainTexHue", s: "_MainTexSaturation", v: "_MainTexValue", g: "_MainTexGamma"));
             bool useMainGradation = IsFeatureOnFloat(material, "_MainGradationStrength");
             bool useMain2ndTex = IsFeatureOnFloat(material, "_UseMain2ndTex");
             bool useMain3rdTex = IsFeatureOnFloat(material, "_UseMain3rdTex");
@@ -495,7 +495,10 @@ namespace lilToon
                         }
                 }
                 Set("_RimDirStrength", "GEOM_TYPE_LEAF");
-                Set("_MainTexHSVG", "EFFECT_HUE_VARIATION");
+                Set("_MainTexHue", "EFFECT_HUE_VARIATION");
+                Set("_MainTexSaturation", "EFFECT_HUE_VARIATION");
+                Set("_MainTexValue", "EFFECT_HUE_VARIATION");
+                Set("_MainTexGamma", "EFFECT_HUE_VARIATION");
                 Set("_MainGradationStrength", "EFFECT_HUE_VARIATION");
             }
             AssetDatabase.SaveAssets();
@@ -523,6 +526,14 @@ namespace lilToon
         {
             if(material.HasProperty(propname)) return material.GetVector(propname) != lilConstants.defaultHSVG;
             return false;
+        }
+
+        private static bool IsFeatureOnHSVG(Material material, (string h, string s, string v, string g) propnames)
+        {
+            return material.HasProperty(propnames.h) && !Mathf.Approximately(material.GetFloat(propnames.h), lilConstants.defaultHSVG.x)
+                || material.HasProperty(propnames.s) && !Mathf.Approximately(material.GetFloat(propnames.s), lilConstants.defaultHSVG.y)
+                || material.HasProperty(propnames.v) && !Mathf.Approximately(material.GetFloat(propnames.v), lilConstants.defaultHSVG.z)
+                || material.HasProperty(propnames.g) && !Mathf.Approximately(material.GetFloat(propnames.g), lilConstants.defaultHSVG.w);
         }
 
         private static bool IsFeatureOnDecalAnimation(Material material, string propname)

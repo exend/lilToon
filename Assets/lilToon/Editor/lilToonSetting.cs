@@ -1041,10 +1041,16 @@ public class lilToonSetting : ScriptableObject
             }
         }
 
-        if(!shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION && material.HasProperty("_MainTexHSVG") && material.GetVector("_MainTexHSVG") != lilConstants.defaultHSVG)
+        if(!shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION)
         {
-            logs.Add("[lilToon] LIL_FEATURE_MAIN_TONE_CORRECTION : " + AssetDatabase.GetAssetPath(material));
-            shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION = true;
+            if(material.HasProperty("_MainTexHue") && !Mathf.Approximately(material.GetFloat("_MainTexHue"), lilConstants.defaultHSVG.x) 
+                || material.HasProperty("_MainTexSaturation") && !Mathf.Approximately(material.GetFloat("_MainTexSaturation"), lilConstants.defaultHSVG.y) 
+                || material.HasProperty("_MainTexValue") && !Mathf.Approximately(material.GetFloat("_MainTexValue"), lilConstants.defaultHSVG.z) 
+                || material.HasProperty("_MainTexGamma") && !Mathf.Approximately(material.GetFloat("_MainTexGamma"), lilConstants.defaultHSVG.w))
+            {
+                logs.Add("[lilToon] LIL_FEATURE_MAIN_TONE_CORRECTION : " + AssetDatabase.GetAssetPath(material));
+                shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION = true;
+            }
         }
         if(!shaderSetting.LIL_FEATURE_MAIN_GRADATION_MAP && material.HasProperty("_MainGradationStrength") && material.GetFloat("_MainGradationStrength") != 0.0f)
         {
@@ -1304,7 +1310,7 @@ public class lilToonSetting : ScriptableObject
 
             shaderSetting.LIL_FEATURE_FUR_COLLISION = shaderSetting.LIL_FEATURE_FUR_COLLISION || propname.Contains("_FurTouchStrength");
 
-            shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION = shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION || propname.Contains("_MainTexHSVG");
+            shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION = shaderSetting.LIL_FEATURE_MAIN_TONE_CORRECTION || propname.Contains("_MainTexHue") || propname.Contains("_MainTexSaturation") || propname.Contains("_MainTexValue") || propname.Contains("_MainTexGamma");
             shaderSetting.LIL_FEATURE_MAIN_GRADATION_MAP = shaderSetting.LIL_FEATURE_MAIN_GRADATION_MAP || propname.Contains("_MainGradationStrength");
             shaderSetting.LIL_FEATURE_MAIN2ND = shaderSetting.LIL_FEATURE_MAIN2ND || propname.Contains("_UseMain2ndTex");
             shaderSetting.LIL_FEATURE_MAIN3RD = shaderSetting.LIL_FEATURE_MAIN3RD || propname.Contains("_UseMain3rdTex");
