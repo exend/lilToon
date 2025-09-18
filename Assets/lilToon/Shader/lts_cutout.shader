@@ -379,6 +379,7 @@ Shader "Hidden/lilToonCutout"
         // Emmision
         [lilToggleLeft] _UseEmission                ("sEmission", Int) = 0
         [HDR][lilHDR]   _EmissionColor              ("sColor", Color) = (1,1,1,1)
+        [lilEnum]       _EmissionColorBlendMode     ("sColorBlendModes", Int) = 3
                         _EmissionMap                ("Texture", 2D) = "white" {}
         [lilUVAnim]     _EmissionMap_ScrollRotate   ("sScrollRotates", Vector) = (0,0,0,0)
         [lilEnum]       _EmissionMap_UVMode         ("UV Mode|UV0|UV1|UV2|UV3|Rim", Int) = 0
@@ -417,6 +418,7 @@ Shader "Hidden/lilToonCutout"
         // Emmision2nd
         [lilToggleLeft] _UseEmission2nd             ("sEmission2nd", Int) = 0
         [HDR][lilHDR]   _Emission2ndColor           ("sColor", Color) = (1,1,1,1)
+        [lilEnum]       _Emission2ndColorBlendMode  ("sColorBlendModes", Int) = 3
                         _Emission2ndMap             ("Texture", 2D) = "white" {}
         [lilUVAnim]     _Emission2ndMap_ScrollRotate ("sScrollRotates", Vector) = (0,0,0,0)
         [lilEnum]       _Emission2ndMap_UVMode      ("UV Mode|UV0|UV1|UV2|UV3|Rim", Int) = 0

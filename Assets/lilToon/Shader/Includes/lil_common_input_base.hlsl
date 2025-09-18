@@ -668,10 +668,12 @@ uint    _Cull;
     uint    _GlitterUVMode;
 #endif
 #if defined(LIL_FEATURE_EMISSION_1ST)
+    uint    _EmissionColorBlendMode;
     uint    _EmissionMap_UVMode;
     uint    _EmissionBlendMode;
 #endif
 #if defined(LIL_FEATURE_EMISSION_2ND)
+    uint    _Emission2ndColorBlendMode;
     uint    _Emission2ndMap_UVMode;
     uint    _Emission2ndBlendMode;
 #endif

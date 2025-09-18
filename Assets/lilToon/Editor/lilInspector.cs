@@ -492,6 +492,7 @@ namespace lilToon
 
         private readonly lilMaterialProperty useEmission                    = new lilMaterialProperty("_UseEmission", PropertyBlock.Emission, PropertyBlock.Emission1st);
         private readonly lilMaterialProperty emissionColor                  = new lilMaterialProperty("_EmissionColor", PropertyBlock.Emission, PropertyBlock.Emission1st);
+        private readonly lilMaterialProperty emissionColorBlendMode         = new lilMaterialProperty("_EmissionColorBlendMode", PropertyBlock.Emission, PropertyBlock.Emission1st);
         private readonly lilMaterialProperty emissionMap                    = new lilMaterialProperty("_EmissionMap", true, PropertyBlock.Emission, PropertyBlock.Emission1st);
         private readonly lilMaterialProperty emissionMap_ScrollRotate       = new lilMaterialProperty("_EmissionMap_ScrollRotate", PropertyBlock.Emission, PropertyBlock.Emission1st);
         private readonly lilMaterialProperty emissionMap_UVMode             = new lilMaterialProperty("_EmissionMap_UVMode", PropertyBlock.Emission, PropertyBlock.Emission1st);
@@ -509,6 +510,7 @@ namespace lilToon
 
         private readonly lilMaterialProperty useEmission2nd                     = new lilMaterialProperty("_UseEmission2nd", PropertyBlock.Emission, PropertyBlock.Emission2nd);
         private readonly lilMaterialProperty emission2ndColor                   = new lilMaterialProperty("_Emission2ndColor", PropertyBlock.Emission, PropertyBlock.Emission2nd);
+        private readonly lilMaterialProperty emission2ndColorBlendMode          = new lilMaterialProperty("_Emission2ndColorBlendMode", PropertyBlock.Emission, PropertyBlock.Emission2nd);
         private readonly lilMaterialProperty emission2ndMap                     = new lilMaterialProperty("_Emission2ndMap", true, PropertyBlock.Emission, PropertyBlock.Emission2nd);
         private readonly lilMaterialProperty emission2ndMap_ScrollRotate        = new lilMaterialProperty("_Emission2ndMap_ScrollRotate", PropertyBlock.Emission, PropertyBlock.Emission2nd);
         private readonly lilMaterialProperty emission2ndMap_UVMode              = new lilMaterialProperty("_Emission2ndMap_UVMode", PropertyBlock.Emission, PropertyBlock.Emission2nd);
@@ -1168,6 +1170,7 @@ namespace lilToon
 
                 useEmission,
                 emissionColor,
+                emissionColorBlendMode,
                 emissionMap,
                 emissionMap_ScrollRotate,
                 emissionMap_UVMode,
@@ -1185,6 +1188,7 @@ namespace lilToon
 
                 useEmission2nd,
                 emission2ndColor,
+                emission2ndColorBlendMode,
                 emission2ndMap,
                 emission2ndMap_ScrollRotate,
                 emission2ndMap_UVMode,
@@ -1914,6 +1918,7 @@ namespace lilToon
                             EditorGUILayout.BeginVertical(boxInnerHalf);
                             TextureGUI(ref edSet.isShowEmissionMap, colorMaskRGBAContent, emissionMap, emissionColor, emissionMap_ScrollRotate, emissionMap_UVMode, true, true);
                             LocalizedPropertyAlpha(emissionColor);
+                            LocalizedProperty(emissionColorBlendMode);
                             LocalizedProperty(emissionMainStrength);
                             lilEditorGUI.DrawLine();
                             TextureGUI(ref edSet.isShowEmissionBlendMask, maskBlendRGBAContent, emissionBlendMask, emissionBlend, emissionBlendMask_ScrollRotate, true, true);
@@ -1936,6 +1941,7 @@ namespace lilToon
                             EditorGUILayout.BeginVertical(boxInnerHalf);
                             TextureGUI(ref edSet.isShowEmission2ndMap, colorMaskRGBAContent, emission2ndMap, emission2ndColor, emission2ndMap_ScrollRotate, emission2ndMap_UVMode, true, true);
                             LocalizedPropertyAlpha(emission2ndColor);
+                            LocalizedProperty(emission2ndColorBlendMode);
                             LocalizedProperty(emission2ndMainStrength);
                             lilEditorGUI.DrawLine();
                             TextureGUI(ref edSet.isShowEmission2ndBlendMask, maskBlendRGBAContent, emission2ndBlendMask, emission2ndBlend, emission2ndBlendMask_ScrollRotate, true, true);
@@ -2838,6 +2844,7 @@ namespace lilToon
                                 EditorGUILayout.BeginVertical(boxInnerHalf);
                                 TextureGUI(ref edSet.isShowEmissionMap, colorMaskRGBAContent, emissionMap, emissionColor, emissionMap_ScrollRotate, emissionMap_UVMode, true, true);
                                 LocalizedPropertyAlpha(emissionColor);
+                                LocalizedProperty(emissionColorBlendMode);
                                 LocalizedProperty(emissionMainStrength);
                                 lilEditorGUI.DrawLine();
                                 TextureGUI(ref edSet.isShowEmissionBlendMask, maskBlendRGBAContent, emissionBlendMask, emissionBlend, emissionBlendMask_ScrollRotate, true, true);
@@ -2872,6 +2879,7 @@ namespace lilToon
                                 EditorGUILayout.BeginVertical(boxInnerHalf);
                                 TextureGUI(ref edSet.isShowEmission2ndMap, colorMaskRGBAContent, emission2ndMap, emission2ndColor, emission2ndMap_ScrollRotate, emission2ndMap_UVMode, true, true);
                                 LocalizedPropertyAlpha(emission2ndColor);
+                                LocalizedProperty(emission2ndColorBlendMode);
                                 LocalizedProperty(emission2ndMainStrength);
                                 lilEditorGUI.DrawLine();
                                 TextureGUI(ref edSet.isShowEmission2ndBlendMask, maskBlendRGBAContent, emission2ndBlendMask, emission2ndBlend, emission2ndBlendMask_ScrollRotate, true, true);

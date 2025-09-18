@@ -1935,10 +1935,12 @@
             // Texture
             #if defined(LIL_FEATURE_EmissionMap)
                 #if defined(LIL_FEATURE_ANIMATE_EMISSION_UV)
-                    emissionColor *= LIL_GET_EMITEX(_EmissionMap, _EmissionMapParaTex);
+                    float4 emTex = LIL_GET_EMITEX(_EmissionMap, _EmissionMapParaTex);
                 #else
-                    emissionColor *= LIL_SAMPLE_2D_ST(_EmissionMap, sampler_EmissionMap, _EmissionMapParaTex);
+                    float4 emTex = LIL_SAMPLE_2D_ST(_EmissionMap, sampler_EmissionMap, _EmissionMapParaTex);
                 #endif
+                emissionColor.rgb = lilBlendColor(emTex.rgb, emissionColor.rgb, 1.f, _EmissionColorBlendMode);
+                emissionColor.a *= emTex.a;
             #endif
             // Mask
             #if defined(LIL_FEATURE_EmissionBlendMask)
@@ -2019,10 +2021,12 @@
             // Texture
             #if defined(LIL_FEATURE_Emission2ndMap)
                 #if defined(LIL_FEATURE_ANIMATE_EMISSION_UV)
-                    emission2ndColor *= LIL_GET_EMITEX(_Emission2ndMap, _Emission2ndMapParaTex);
+                    float4 em2ndTex = LIL_GET_EMITEX(_Emission2ndMap, _Emission2ndMapParaTex);
                 #else
-                    emission2ndColor *= LIL_SAMPLE_2D_ST(_Emission2ndMap, sampler_Emission2ndMap, _Emission2ndMapParaTex);
+                    float4 em2ndTex = LIL_SAMPLE_2D_ST(_Emission2ndMap, sampler_Emission2ndMap, _Emission2ndMapParaTex);
                 #endif
+                emission2ndColor.rgb = lilBlendColor(em2ndTex.rgb, emission2ndColor.rgb, 1.f, _Emission2ndColorBlendMode);
+                emission2ndColor.a *= em2ndTex.a;
             #endif
             // Mask
             #if defined(LIL_FEATURE_Emission2ndBlendMask)
