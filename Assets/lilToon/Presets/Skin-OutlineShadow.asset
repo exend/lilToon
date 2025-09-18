@@ -26,6 +26,8 @@ MonoBehaviour:
     value: {r: 1, g: 1, b: 1, a: 1}
   - name: _Color3rd
     value: {r: 1, g: 1, b: 1, a: 1}
+  - name: _Color4th
+    value: {r: 1, g: 1, b: 1, a: 1}
   - name: _ShadowColor
     value: {r: 1, g: 0.7, b: 0.75, a: 1}
   - name: _Shadow2ndColor
@@ -111,8 +113,6 @@ MonoBehaviour:
   vectors:
   - name: _MainTex_ScrollRotate
     value: {x: 0, y: 0, z: 0, w: 0}
-  - name: _MainTexHSVG
-    value: {x: 0, y: 1, z: 1, w: 1}
   - name: _Main2ndTexDecalAnimation
     value: {x: 1, y: 1, z: 1, w: 30}
   - name: _Main2ndTexDecalSubParam
@@ -120,6 +120,10 @@ MonoBehaviour:
   - name: _Main3rdTexDecalAnimation
     value: {x: 1, y: 1, z: 1, w: 30}
   - name: _Main3rdTexDecalSubParam
+    value: {x: 1, y: 1, z: 0, w: 1}
+  - name: _Main4thTexDecalAnimation
+    value: {x: 1, y: 1, z: 1, w: 30}
+  - name: _Main4thTexDecalSubParam
     value: {x: 1, y: 1, z: 0, w: 1}
   - name: _EmissionMap_ScrollRotate
     value: {x: 0, y: 0, z: 0, w: 0}
@@ -148,6 +152,14 @@ MonoBehaviour:
     value: 0
   - name: _BackfaceForceShadow
     value: 0
+  - name: _MainTexHue
+    value: 0
+  - name: _MainTexSaturation
+    value: 1
+  - name: _MainTexValue
+    value: 1
+  - name: _MainTexGamma
+    value: 1
   - name: _UseMain2ndTex
     value: 0
   - name: _Main2ndTexAngle
@@ -187,6 +199,26 @@ MonoBehaviour:
   - name: _Main3rdTexBlendMode
     value: 0
   - name: _Main3rdEnableLighting
+    value: 1
+  - name: _UseMain4thTex
+    value: 0
+  - name: _Main4thTexAngle
+    value: 0
+  - name: _Main4thTexIsDecal
+    value: 0
+  - name: _Main4thTexIsLeftOnly
+    value: 0
+  - name: _Main4thTexIsRightOnly
+    value: 0
+  - name: _Main4thTexShouldCopy
+    value: 0
+  - name: _Main4thTexShouldFlipMirror
+    value: 0
+  - name: _Main4thTexShouldFlipCopy
+    value: 0
+  - name: _Main4thTexBlendMode
+    value: 0
+  - name: _Main4thEnableLighting
     value: 1
   - name: _UseBumpMap
     value: 0
