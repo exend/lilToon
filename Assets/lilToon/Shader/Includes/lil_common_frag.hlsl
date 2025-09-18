@@ -748,7 +748,9 @@
             if(_Main2ndTex_UVMode == 3) uv2nd = fd.uv3;
             if(_Main2ndTex_UVMode == 4) uv2nd = fd.uvMat;
             #if defined(LIL_FEATURE_Main2ndTex)
-                color2nd *= LIL_GET_SUBTEX(_Main2ndTex, uv2nd);
+                float4 tex2nd = LIL_GET_SUBTEX(_Main2ndTex, uv2nd);
+                color2nd.rgb = lilBlendColor(tex2nd.rgb, color2nd.rgb, 1.f, _Main2ndColorBlendMode);
+                color2nd.a *= tex2nd.a;
             #endif
             #if defined(LIL_FEATURE_Main2ndBlendMask)
                 color2nd.a *= LIL_SAMPLE_2D(_Main2ndBlendMask, samp, fd.uvMain).r;
@@ -844,7 +846,9 @@
             if(_Main3rdTex_UVMode == 3) uv3rd = fd.uv3;
             if(_Main3rdTex_UVMode == 4) uv3rd = fd.uvMat;
             #if defined(LIL_FEATURE_Main3rdTex)
-                color3rd *= LIL_GET_SUBTEX(_Main3rdTex, uv3rd);
+                float4 tex3rd = LIL_GET_SUBTEX(_Main3rdTex, uv3rd);
+                color3rd.rgb = lilBlendColor(tex3rd.rgb, color3rd.rgb, 1.f, _Main3rdColorBlendMode);
+                color3rd.a *= tex3rd.a;
             #endif
             #if defined(LIL_FEATURE_Main3rdBlendMask)
                 color3rd.a *= LIL_SAMPLE_2D(_Main3rdBlendMask, samp, fd.uvMain).r;
@@ -940,7 +944,9 @@
             if(_Main4thTex_UVMode == 3) uv4th = fd.uv3;
             if(_Main4thTex_UVMode == 4) uv4th = fd.uvMat;
             #if defined(LIL_FEATURE_Main4thTex)
-                color4th *= LIL_GET_SUBTEX(_Main4thTex, uv4th);
+                float4 tex4th = LIL_GET_SUBTEX(_Main4thTex, uv4th);
+                color4th.rgb = lilBlendColor(tex4th.rgb, color4th.rgb, 1.f, _Main4thColorBlendMode);
+                color4th.a *= tex4th.a;
             #endif
             #if defined(LIL_FEATURE_Main4thBlendMask)
                 color4th.a *= LIL_SAMPLE_2D(_Main4thBlendMask, samp, fd.uvMain).r;

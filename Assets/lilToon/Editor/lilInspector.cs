@@ -251,6 +251,7 @@ namespace lilToon
 
         protected static string     sMainColorBranch                { get { return lilLanguageManager.sMainColorBranch              ; } private set { lilLanguageManager.sMainColorBranch               = value; } }
         protected static string     sCullModes                      { get { return lilLanguageManager.sCullModes                    ; } private set { lilLanguageManager.sCullModes                     = value; } }
+        protected static string     sColorBlendModes                { get { return lilLanguageManager.sColorBlendModes              ; } private set { lilLanguageManager.sColorBlendModes               = value; } }
         protected static string     sBlendModes                     { get { return lilLanguageManager.sBlendModes                   ; } private set { lilLanguageManager.sBlendModes                    = value; } }
         protected static string     sAlphaModes                     { get { return lilLanguageManager.sAlphaModes                   ; } private set { lilLanguageManager.sAlphaModes                    = value; } }
         protected static string     sAlphaMaskModes                 { get { return lilLanguageManager.sAlphaMaskModes               ; } private set { lilLanguageManager.sAlphaMaskModes                = value; } }
@@ -349,6 +350,7 @@ namespace lilToon
 
         private readonly lilMaterialProperty useMain2ndTex                          = new lilMaterialProperty("_UseMain2ndTex", PropertyBlock.MainColor, PropertyBlock.MainColor2nd);
         private readonly lilMaterialProperty mainColor2nd                           = new lilMaterialProperty("_Color2nd", PropertyBlock.MainColor, PropertyBlock.MainColor2nd);
+        private readonly lilMaterialProperty main2ndColorBlendMode                  = new lilMaterialProperty("_Main2ndColorBlendMode", PropertyBlock.MainColor, PropertyBlock.MainColor2nd);
         private readonly lilMaterialProperty main2ndTex                             = new lilMaterialProperty("_Main2ndTex", true, PropertyBlock.MainColor, PropertyBlock.MainColor2nd);
         private readonly lilMaterialProperty main2ndTexAngle                        = new lilMaterialProperty("_Main2ndTexAngle", PropertyBlock.MainColor, PropertyBlock.MainColor2nd);
         private readonly lilMaterialProperty main2ndTex_ScrollRotate                = new lilMaterialProperty("_Main2ndTex_ScrollRotate", PropertyBlock.MainColor, PropertyBlock.MainColor2nd);
@@ -378,6 +380,7 @@ namespace lilToon
 
         private readonly lilMaterialProperty useMain3rdTex                          = new lilMaterialProperty("_UseMain3rdTex", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
         private readonly lilMaterialProperty mainColor3rd                           = new lilMaterialProperty("_Color3rd", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
+        private readonly lilMaterialProperty main3rdColorBlendMode                  = new lilMaterialProperty("_Main3rdColorBlendMode", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
         private readonly lilMaterialProperty main3rdTexAngle                        = new lilMaterialProperty("_Main3rdTexAngle", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
         private readonly lilMaterialProperty main3rdTex_ScrollRotate                = new lilMaterialProperty("_Main3rdTex_ScrollRotate", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
         private readonly lilMaterialProperty main3rdTex                             = new lilMaterialProperty("_Main3rdTex", true, PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
@@ -405,34 +408,35 @@ namespace lilToon
         private readonly lilMaterialProperty main3rdDissolvePos                     = new lilMaterialProperty("_Main3rdDissolvePos", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
         private readonly lilMaterialProperty main3rdDistanceFade                    = new lilMaterialProperty("_Main3rdDistanceFade", PropertyBlock.MainColor, PropertyBlock.MainColor3rd);
 
-        private readonly lilMaterialProperty useMain4thTex = new lilMaterialProperty("_UseMain4thTex", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty mainColor4th = new lilMaterialProperty("_Color4th", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexAngle = new lilMaterialProperty("_Main4thTexAngle", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTex_ScrollRotate = new lilMaterialProperty("_Main4thTex_ScrollRotate", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTex = new lilMaterialProperty("_Main4thTex", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTex_UVMode = new lilMaterialProperty("_Main4thTex_UVMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTex_Cull = new lilMaterialProperty("_Main4thTex_Cull", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexDecalAnimation = new lilMaterialProperty("_Main4thTexDecalAnimation", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexDecalSubParam = new lilMaterialProperty("_Main4thTexDecalSubParam", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexIsDecal = new lilMaterialProperty("_Main4thTexIsDecal", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexIsLeftOnly = new lilMaterialProperty("_Main4thTexIsLeftOnly", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexIsRightOnly = new lilMaterialProperty("_Main4thTexIsRightOnly", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexShouldCopy = new lilMaterialProperty("_Main4thTexShouldCopy", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexShouldFlipMirror = new lilMaterialProperty("_Main4thTexShouldFlipMirror", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexShouldFlipCopy = new lilMaterialProperty("_Main4thTexShouldFlipCopy", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexIsMSDF = new lilMaterialProperty("_Main4thTexIsMSDF", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thBlendMask = new lilMaterialProperty("_Main4thBlendMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexBlendMode = new lilMaterialProperty("_Main4thTexBlendMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thTexAlphaMode = new lilMaterialProperty("_Main4thTexAlphaMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thEnableLighting = new lilMaterialProperty("_Main4thEnableLighting", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolveMask = new lilMaterialProperty("_Main4thDissolveMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolveNoiseMask = new lilMaterialProperty("_Main4thDissolveNoiseMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolveNoiseMask_ScrollRotate = new lilMaterialProperty("_Main4thDissolveNoiseMask_ScrollRotate", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolveNoiseStrength = new lilMaterialProperty("_Main4thDissolveNoiseStrength", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolveColor = new lilMaterialProperty("_Main4thDissolveColor", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolveParams = new lilMaterialProperty("_Main4thDissolveParams", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDissolvePos = new lilMaterialProperty("_Main4thDissolvePos", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
-        private readonly lilMaterialProperty main4thDistanceFade = new lilMaterialProperty("_Main4thDistanceFade", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty useMain4thTex                          = new lilMaterialProperty("_UseMain4thTex", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty mainColor4th                           = new lilMaterialProperty("_Color4th", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thColorBlendMode                  = new lilMaterialProperty("_Main4thColorBlendMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexAngle                        = new lilMaterialProperty("_Main4thTexAngle", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTex_ScrollRotate                = new lilMaterialProperty("_Main4thTex_ScrollRotate", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTex                             = new lilMaterialProperty("_Main4thTex", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTex_UVMode                      = new lilMaterialProperty("_Main4thTex_UVMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTex_Cull                        = new lilMaterialProperty("_Main4thTex_Cull", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexDecalAnimation               = new lilMaterialProperty("_Main4thTexDecalAnimation", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexDecalSubParam                = new lilMaterialProperty("_Main4thTexDecalSubParam", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexIsDecal                      = new lilMaterialProperty("_Main4thTexIsDecal", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexIsLeftOnly                   = new lilMaterialProperty("_Main4thTexIsLeftOnly", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexIsRightOnly                  = new lilMaterialProperty("_Main4thTexIsRightOnly", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexShouldCopy                   = new lilMaterialProperty("_Main4thTexShouldCopy", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexShouldFlipMirror             = new lilMaterialProperty("_Main4thTexShouldFlipMirror", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexShouldFlipCopy               = new lilMaterialProperty("_Main4thTexShouldFlipCopy", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexIsMSDF                       = new lilMaterialProperty("_Main4thTexIsMSDF", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thBlendMask                       = new lilMaterialProperty("_Main4thBlendMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexBlendMode                    = new lilMaterialProperty("_Main4thTexBlendMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thTexAlphaMode                    = new lilMaterialProperty("_Main4thTexAlphaMode", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thEnableLighting                  = new lilMaterialProperty("_Main4thEnableLighting", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolveMask                    = new lilMaterialProperty("_Main4thDissolveMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolveNoiseMask               = new lilMaterialProperty("_Main4thDissolveNoiseMask", true, PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolveNoiseMask_ScrollRotate  = new lilMaterialProperty("_Main4thDissolveNoiseMask_ScrollRotate", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolveNoiseStrength           = new lilMaterialProperty("_Main4thDissolveNoiseStrength", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolveColor                   = new lilMaterialProperty("_Main4thDissolveColor", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolveParams                  = new lilMaterialProperty("_Main4thDissolveParams", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDissolvePos                     = new lilMaterialProperty("_Main4thDissolvePos", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
+        private readonly lilMaterialProperty main4thDistanceFade                    = new lilMaterialProperty("_Main4thDistanceFade", PropertyBlock.MainColor, PropertyBlock.MainColor4th);
 
         private readonly lilMaterialProperty alphaMaskMode  = new lilMaterialProperty("_AlphaMaskMode", PropertyBlock.MainColor, PropertyBlock.AlphaMask);
         private readonly lilMaterialProperty alphaMask      = new lilMaterialProperty("_AlphaMask", true, PropertyBlock.MainColor, PropertyBlock.AlphaMask);
@@ -1022,6 +1026,7 @@ namespace lilToon
 
                 useMain2ndTex,
                 mainColor2nd,
+                main2ndColorBlendMode,
                 main2ndTex,
                 main2ndTexAngle,
                 main2ndTex_ScrollRotate,
@@ -1051,6 +1056,7 @@ namespace lilToon
 
                 useMain3rdTex,
                 mainColor3rd,
+                main3rdColorBlendMode,
                 main3rdTex,
                 main3rdTexAngle,
                 main3rdTex_ScrollRotate,
@@ -1080,6 +1086,7 @@ namespace lilToon
 
                 useMain4thTex,
                 mainColor4th,
+                main4thColorBlendMode,
                 main4thTex,
                 main4thTexAngle,
                 main4thTex_ScrollRotate,
@@ -2642,6 +2649,7 @@ namespace lilToon
                                     LocalizedPropertyTexture(colorRGBAContent, main2ndTex, mainColor2nd);
                                     EditorGUI.indentLevel += 2;
                                     LocalizedPropertyAlpha(mainColor2nd);
+                                    LocalizedProperty(main2ndColorBlendMode);
                                     LocalizedProperty(main2ndTexIsMSDF);
                                     LocalizedProperty(main2ndTex_Cull);
                                     EditorGUI.indentLevel -= 2;
@@ -2688,6 +2696,7 @@ namespace lilToon
                                     LocalizedPropertyTexture(colorRGBAContent, main3rdTex, mainColor3rd);
                                     EditorGUI.indentLevel += 2;
                                     LocalizedPropertyAlpha(mainColor3rd);
+                                    LocalizedProperty(main3rdColorBlendMode);
                                     LocalizedProperty(main3rdTexIsMSDF);
                                     LocalizedProperty(main3rdTex_Cull);
                                     EditorGUI.indentLevel -= 2;
@@ -2734,6 +2743,7 @@ namespace lilToon
                                     LocalizedPropertyTexture(colorRGBAContent, main4thTex, mainColor4th);
                                     EditorGUI.indentLevel += 2;
                                     LocalizedPropertyAlpha(mainColor4th);
+                                    LocalizedProperty(main4thColorBlendMode);
                                     LocalizedProperty(main4thTexIsMSDF);
                                     LocalizedProperty(main4thTex_Cull);
                                     EditorGUI.indentLevel -= 2;
@@ -6513,6 +6523,7 @@ namespace lilToon
                 {
                     hsvgMaterial.SetFloat(useMain2ndTex.name,               useMain2ndTex.floatValue);
                     hsvgMaterial.SetColor(mainColor2nd.name,                mainColor2nd.colorValue);
+                    hsvgMaterial.SetFloat(main2ndColorBlendMode.name,       main2ndColorBlendMode.floatValue);
                     hsvgMaterial.SetFloat(main2ndTexAngle.name,             main2ndTexAngle.floatValue);
                     hsvgMaterial.SetFloat(main2ndTexIsDecal.name,           main2ndTexIsDecal.floatValue);
                     hsvgMaterial.SetFloat(main2ndTexIsLeftOnly.name,        main2ndTexIsLeftOnly.floatValue);
@@ -6555,6 +6566,7 @@ namespace lilToon
                 {
                     hsvgMaterial.SetFloat(useMain3rdTex.name,               useMain3rdTex.floatValue);
                     hsvgMaterial.SetColor(mainColor3rd.name,                mainColor3rd.colorValue);
+                    hsvgMaterial.SetFloat(main3rdColorBlendMode.name,       main3rdColorBlendMode.floatValue);
                     hsvgMaterial.SetFloat(main3rdTexAngle.name,             main3rdTexAngle.floatValue);
                     hsvgMaterial.SetFloat(main3rdTexIsDecal.name,           main3rdTexIsDecal.floatValue);
                     hsvgMaterial.SetFloat(main3rdTexIsLeftOnly.name,        main3rdTexIsLeftOnly.floatValue);
@@ -6597,6 +6609,7 @@ namespace lilToon
                 {
                     hsvgMaterial.SetFloat(useMain4thTex.name,               useMain4thTex.floatValue);
                     hsvgMaterial.SetColor(mainColor4th.name,                mainColor4th.colorValue);
+                    hsvgMaterial.SetFloat(main4thColorBlendMode.name,       main4thColorBlendMode.floatValue);
                     hsvgMaterial.SetFloat(main4thTexAngle.name,             main4thTexAngle.floatValue);
                     hsvgMaterial.SetFloat(main4thTexIsDecal.name,           main4thTexIsDecal.floatValue);
                     hsvgMaterial.SetFloat(main4thTexIsLeftOnly.name,        main4thTexIsLeftOnly.floatValue);
@@ -6730,6 +6743,7 @@ namespace lilToon
                 {
                     hsvgMaterial.SetFloat(useMain2ndTex.name,               useMain2ndTex.floatValue);
                     hsvgMaterial.SetColor(mainColor2nd.name,                mainColor2nd.colorValue);
+                    hsvgMaterial.SetFloat(main2ndColorBlendMode.name,       main2ndColorBlendMode.floatValue);
                     hsvgMaterial.SetFloat(main2ndTexAngle.name,             main2ndTexAngle.floatValue);
                     hsvgMaterial.SetFloat(main2ndTexIsDecal.name,           main2ndTexIsDecal.floatValue);
                     hsvgMaterial.SetFloat(main2ndTexIsLeftOnly.name,        main2ndTexIsLeftOnly.floatValue);
@@ -6772,6 +6786,7 @@ namespace lilToon
                 {
                     hsvgMaterial.SetFloat(useMain3rdTex.name,               useMain3rdTex.floatValue);
                     hsvgMaterial.SetColor(mainColor3rd.name,                mainColor3rd.colorValue);
+                    hsvgMaterial.SetFloat(main3rdColorBlendMode.name,       main3rdColorBlendMode.floatValue);
                     hsvgMaterial.SetFloat(main3rdTexAngle.name,             main3rdTexAngle.floatValue);
                     hsvgMaterial.SetFloat(main3rdTexIsDecal.name,           main3rdTexIsDecal.floatValue);
                     hsvgMaterial.SetFloat(main3rdTexIsLeftOnly.name,        main3rdTexIsLeftOnly.floatValue);
@@ -6812,22 +6827,23 @@ namespace lilToon
 
                 if(bake4th)
                 {
-                    hsvgMaterial.SetFloat(useMain4thTex.name, useMain4thTex.floatValue);
-                    hsvgMaterial.SetColor(mainColor4th.name, mainColor4th.colorValue);
-                    hsvgMaterial.SetFloat(main4thTexAngle.name, main4thTexAngle.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexIsDecal.name, main4thTexIsDecal.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexIsLeftOnly.name, main4thTexIsLeftOnly.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexIsRightOnly.name, main4thTexIsRightOnly.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexShouldCopy.name, main4thTexShouldCopy.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexShouldFlipMirror.name, main4thTexShouldFlipMirror.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexShouldFlipCopy.name, main4thTexShouldFlipCopy.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexIsMSDF.name, main4thTexIsMSDF.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexBlendMode.name, main4thTexBlendMode.floatValue);
-                    hsvgMaterial.SetFloat(main4thTexAlphaMode.name, main4thTexAlphaMode.floatValue);
-                    hsvgMaterial.SetTextureOffset(main4thTex.name, material.GetTextureOffset(main4thTex.name));
-                    hsvgMaterial.SetTextureScale(main4thTex.name, material.GetTextureScale(main4thTex.name));
-                    hsvgMaterial.SetTextureOffset(main4thBlendMask.name, material.GetTextureOffset(main4thBlendMask.name));
-                    hsvgMaterial.SetTextureScale(main4thBlendMask.name, material.GetTextureScale(main4thBlendMask.name));
+                    hsvgMaterial.SetFloat(useMain4thTex.name,               useMain4thTex.floatValue);
+                    hsvgMaterial.SetColor(mainColor4th.name,                mainColor4th.colorValue);
+                    hsvgMaterial.SetFloat(main4thColorBlendMode.name,       main4thColorBlendMode.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexAngle.name,             main4thTexAngle.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexIsDecal.name,           main4thTexIsDecal.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexIsLeftOnly.name,        main4thTexIsLeftOnly.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexIsRightOnly.name,       main4thTexIsRightOnly.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexShouldCopy.name,        main4thTexShouldCopy.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexShouldFlipMirror.name,  main4thTexShouldFlipMirror.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexShouldFlipCopy.name,    main4thTexShouldFlipCopy.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexIsMSDF.name,            main4thTexIsMSDF.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexBlendMode.name,         main4thTexBlendMode.floatValue);
+                    hsvgMaterial.SetFloat(main4thTexAlphaMode.name,         main4thTexAlphaMode.floatValue);
+                    hsvgMaterial.SetTextureOffset(main4thTex.name,          material.GetTextureOffset(main4thTex.name));
+                    hsvgMaterial.SetTextureScale(main4thTex.name,           material.GetTextureScale(main4thTex.name));
+                    hsvgMaterial.SetTextureOffset(main4thBlendMask.name,    material.GetTextureOffset(main4thBlendMask.name));
+                    hsvgMaterial.SetTextureScale(main4thBlendMask.name,     material.GetTextureScale(main4thBlendMask.name));
 
                     path = AssetDatabase.GetAssetPath(material.GetTexture(main4thTex.name));
                     if(!string.IsNullOrEmpty(path))

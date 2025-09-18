@@ -176,6 +176,8 @@ MonoBehaviour:
     value: 1
   - name: _UseMain3rdTex
     value: 0
+  - name: _Main3rdColorBlendMode
+    value: 3
   - name: _Main3rdTexAngle
     value: 0
   - name: _Main3rdTexIsDecal
@@ -196,6 +198,8 @@ MonoBehaviour:
     value: 1
   - name: _UseMain4thTex
     value: 0
+  - name: _Main4thColorBlendMode
+    value: 3
   - name: _Main4thTexAngle
     value: 0
   - name: _Main4thTexIsDecal

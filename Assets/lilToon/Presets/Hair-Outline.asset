@@ -152,8 +152,6 @@ MonoBehaviour:
     value: 1
   - name: _BackfaceForceShadow
     value: 1
-  - name: _UseMain2ndTex
-    value: 0
   - name: _MainTexHue
     value: 0
   - name: _MainTexSaturation
@@ -162,6 +160,10 @@ MonoBehaviour:
     value: 1
   - name: _MainTexGamma
     value: 1
+  - name: _UseMain2ndTex
+    value: 0
+  - name: _Main2ndColorBlendMode
+    value: 3
   - name: _Main2ndTexAngle
     value: 0
   - name: _Main2ndTexIsDecal
@@ -182,6 +184,8 @@ MonoBehaviour:
     value: 1
   - name: _UseMain3rdTex
     value: 0
+  - name: _Main3rdColorBlendMode
+    value: 3
   - name: _Main3rdTexAngle
     value: 0
   - name: _Main3rdTexIsDecal
@@ -202,6 +206,8 @@ MonoBehaviour:
     value: 1
   - name: _UseMain4thTex
     value: 0
+  - name: _Main4thColorBlendMode
+    value: 3
   - name: _Main4thTexAngle
     value: 0
   - name: _Main4thTexIsDecal

@@ -19,6 +19,7 @@ Shader "Hidden/ltsother_baker"
         // Main2nd
         [lilToggleLeft] _UseMain2ndTex              ("Use Main 2nd", Int) = 0
                         _Color2nd                   ("Color", Color) = (1,1,1,1)
+        [lilEnum]       _Main2ndColorBlendMode      ("Color Blend Mode|Normal|Add|Screen|Multiply|Overlay", Int) = 3
                         _Main2ndTex                 ("Texture", 2D) = "white" {}
         [lilAngle]      _Main2ndTexAngle            ("Angle", Float) = 0
         [lilToggle]     _Main2ndTexIsDecal          ("As Decal", Int) = 0
@@ -29,12 +30,13 @@ Shader "Hidden/ltsother_baker"
         [lilToggle]     _Main2ndTexShouldFlipCopy   ("Flip Copy", Int) = 0
         [lilToggle]     _Main2ndTexIsMSDF           ("As MSDF", Int) = 0
         [NoScaleOffset] _Main2ndBlendMask           ("Mask", 2D) = "white" {}
-        [lilEnum]       _Main2ndTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply", Int) = 0
+        [lilEnum]       _Main2ndTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply|Overlay", Int) = 0
 
         //----------------------------------------------------------------------------------------------------------------------
         // Main3rd
         [lilToggleLeft] _UseMain3rdTex              ("Use Main 3rd", Int) = 0
                         _Color3rd                   ("Color", Color) = (1,1,1,1)
+        [lilEnum]       _Main3rdColorBlendMode      ("Color Blend Mode|Normal|Add|Screen|Multiply|Overlay", Int) = 3
                         _Main3rdTex                 ("Texture", 2D) = "white" {}
         [lilAngle]      _Main3rdTexAngle            ("Angle", Float) = 0
         [lilToggle]     _Main3rdTexIsDecal          ("As Decal", Int) = 0
@@ -45,12 +47,13 @@ Shader "Hidden/ltsother_baker"
         [lilToggle]     _Main3rdTexShouldFlipCopy   ("Flip Copy", Int) = 0
         [lilToggle]     _Main3rdTexIsMSDF           ("As MSDF", Int) = 0
         [NoScaleOffset] _Main3rdBlendMask           ("Mask", 2D) = "white" {}
-        [lilEnum]       _Main3rdTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply", Int) = 0
+        [lilEnum]       _Main3rdTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply|Overlay", Int) = 0
 
         //----------------------------------------------------------------------------------------------------------------------
         // Main4th
         [lilToggleLeft] _UseMain4thTex              ("Use Main 4th", Int) = 0
                         _Color4th                   ("Color", Color) = (1,1,1,1)
+        [lilEnum]       _Main4thColorBlendMode      ("Color Blend Mode|Normal|Add|Screen|Multiply|Overlay", Int) = 3
                         _Main4thTex                 ("Texture", 2D) = "white" {}
         [lilAngle]      _Main4thTexAngle            ("Angle", Float) = 0
         [lilToggle]     _Main4thTexIsDecal          ("As Decal", Int) = 0
@@ -61,7 +64,7 @@ Shader "Hidden/ltsother_baker"
         [lilToggle]     _Main4thTexShouldFlipCopy   ("Flip Copy", Int) = 0
         [lilToggle]     _Main4thTexIsMSDF           ("As MSDF", Int) = 0
         [NoScaleOffset] _Main4thBlendMask           ("Mask", 2D) = "white" {}
-        [lilEnum]       _Main4thTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply", Int) = 0
+        [lilEnum]       _Main4thTexBlendMode        ("Blend Mode|Normal|Add|Screen|Multiply|Overlay", Int) = 0
 
         //----------------------------------------------------------------------------------------------------------------------
         // Alpha Mask
@@ -327,7 +330,9 @@ Shader "Hidden/ltsother_baker"
                     UNITY_BRANCH
                     if(_UseMain2ndTex)
                     {
-                        _Color2nd *= LIL_GET_SUBTEX(_Main2ndTex,input.uv0);
+                        float4 tex2nd = LIL_GET_SUBTEX(_Main2ndTex,input.uv0);
+                        _Color2nd.rgb = lilBlendColor(tex2nd.rgb, _Color2nd.rgb, 1.f, _Main2ndColorBlendMode);
+                        _Color2nd.a *= tex2nd.a;
                         col.rgb = lilBlendColor(col.rgb, _Color2nd.rgb, LIL_SAMPLE_2D(_Main2ndBlendMask,sampler_MainTex,input.uv0).r * _Color2nd.a, _Main2ndTexBlendMode);
                     }
 
@@ -335,7 +340,9 @@ Shader "Hidden/ltsother_baker"
                     UNITY_BRANCH
                     if(_UseMain3rdTex)
                     {
-                        _Color3rd *= LIL_GET_SUBTEX(_Main3rdTex,input.uv0);
+                        float4 tex3rd = LIL_GET_SUBTEX(_Main3rdTex,input.uv0);
+                        _Color3rd.rgb = lilBlendColor(tex3rd.rgb, _Color3rd.rgb, 1.f, _Main3rdColorBlendMode);
+                        _Color3rd.a *= tex3rd.a;
                         col.rgb = lilBlendColor(col.rgb, _Color3rd.rgb, LIL_SAMPLE_2D(_Main3rdBlendMask,sampler_MainTex,input.uv0).r * _Color3rd.a, _Main3rdTexBlendMode);
                     }
 
@@ -343,7 +350,9 @@ Shader "Hidden/ltsother_baker"
                     UNITY_BRANCH
                     if(_UseMain4thTex)
                     {
-                        _Color4th *= LIL_GET_SUBTEX(_Main4thTex,input.uv0);
+                        float4 tex4th = LIL_GET_SUBTEX(_Main4thTex,input.uv0);
+                        _Color4th.rgb = lilBlendColor(tex4th.rgb, _Color4th.rgb, 1.f, _Main4thColorBlendMode);
+                        _Color4th.a *= tex4th.a;
                         col.rgb = lilBlendColor(col.rgb, _Color4th.rgb, LIL_SAMPLE_2D(_Main4thBlendMask,sampler_MainTex,input.uv0).r * _Color4th.a, _Main4thTexBlendMode);
                     }
                 #endif

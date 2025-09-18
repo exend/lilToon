@@ -23,6 +23,7 @@ sTextureRGB	Color (RGB)	色(RGB)	색 (RGB)	颜色 (RGB)	顏色 (RGB)
 sTextureRGBA	Color (RGB) and Transparency (A)	色(RGB)と透明度(A)	색 (RGB) 과 투명도 (A)	颜色 (RGB) & 透明度 (A)	顏色 (RGB) & 透明度 (A)
 sMask	Mask	マスク	마스크	蒙版	蒙版
 sMaskType	Mask Type	マスクタイプ	마스크 타입	蒙版类型	蒙版類型
+sColorBlendMode	Color Blending Mode	Color Blending Mode	Color Blending Mode	Color Blending Mode	Color Blending Mode
 sBlendR	Blend (R)	合成度 (R)	합성 (R)	混合 (R)	混合 (R)
 sBlendMode	Blending Mode	合成モード	합성 모드	混合模式	混合模式
 sBlendModeNormal	Normal	通常	표준	Normal	Normal

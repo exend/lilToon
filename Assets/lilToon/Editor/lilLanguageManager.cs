@@ -14,6 +14,7 @@ namespace lilToon
 
         public static string sMainColorBranch;
         public static string sCullModes;
+        public static string sColorBlendModes;
         public static string sBlendModes;
         public static string sAlphaModes;
         public static string sAlphaMaskModes;
@@ -145,6 +146,7 @@ namespace lilToon
         private static void InitializeLabels()
         {
             loc["sCullModes"]                = BuildParams(GetLoc("sCullMode"), GetLoc("sCullModeOff"), GetLoc("sCullModeFront"), GetLoc("sCullModeBack"));
+            loc["sColorBlendModes"]          = BuildParams(GetLoc("sColorBlendMode"), GetLoc("sBlendModeNormal"), GetLoc("sBlendModeAdd"), GetLoc("sBlendModeScreen"), GetLoc("sBlendModeMul"), GetLoc("sBlendModeOverlay"));
             loc["sBlendModes"]               = BuildParams(GetLoc("sBlendMode"), GetLoc("sBlendModeNormal"), GetLoc("sBlendModeAdd"), GetLoc("sBlendModeScreen"), GetLoc("sBlendModeMul"), GetLoc("sBlendModeOverlay"));
             loc["sAlphaModes"]               = BuildParams(GetLoc("sTransparentMode"), GetLoc("sAlphaMaskModeNone"), GetLoc("sAlphaMaskModeReplace"), GetLoc("sAlphaMaskModeMul"), GetLoc("sAlphaMaskModeAdd"), GetLoc("sAlphaMaskModeSub"));
             loc["sAlphaMaskModes"]           = BuildParams(GetLoc("sAlphaMask"), GetLoc("sAlphaMaskModeNone"), GetLoc("sAlphaMaskModeReplace"), GetLoc("sAlphaMaskModeMul"), GetLoc("sAlphaMaskModeAdd"), GetLoc("sAlphaMaskModeSub"));
@@ -172,6 +174,7 @@ namespace lilToon
             loc["sLightDirectionOverrides"] = BuildParams(GetLoc("sLightDirectionOverride"), GetLoc("sObjectFollowing"));
 
             sCullModes                      = BuildParams(GetLoc("sCullMode"), GetLoc("sCullModeOff"), GetLoc("sCullModeFront"), GetLoc("sCullModeBack"));
+            sColorBlendModes                = BuildParams(GetLoc("sColorBlendMode"), GetLoc("sBlendModeNormal"), GetLoc("sBlendModeAdd"), GetLoc("sBlendModeScreen"), GetLoc("sBlendModeMul"), GetLoc("sBlendModeOverlay"));
             sBlendModes                     = BuildParams(GetLoc("sBlendMode"), GetLoc("sBlendModeNormal"), GetLoc("sBlendModeAdd"), GetLoc("sBlendModeScreen"), GetLoc("sBlendModeMul"), GetLoc("sBlendModeOverlay"));
             sAlphaModes                     = BuildParams(GetLoc("sTransparentMode"), GetLoc("sAlphaMaskModeNone"), GetLoc("sAlphaMaskModeReplace"), GetLoc("sAlphaMaskModeMul"), GetLoc("sAlphaMaskModeAdd"), GetLoc("sAlphaMaskModeSub"));
             sAlphaMaskModes                 = BuildParams(GetLoc("sAlphaMask"), GetLoc("sAlphaMaskModeNone"), GetLoc("sAlphaMaskModeReplace"), GetLoc("sAlphaMaskModeMul"), GetLoc("sAlphaMaskModeAdd"), GetLoc("sAlphaMaskModeSub"));

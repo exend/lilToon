@@ -622,18 +622,21 @@ uint    _Cull;
     uint    _PreOutType;
 #endif
 #if defined(LIL_FEATURE_MAIN2ND)
+    uint    _Main2ndColorBlendMode;
     uint    _Main2ndTexBlendMode;
     uint    _Main2ndTexAlphaMode;
     uint    _Main2ndTex_UVMode;
     uint    _Main2ndTex_Cull;
 #endif
 #if defined(LIL_FEATURE_MAIN3RD)
+    uint    _Main3rdColorBlendMode;
     uint    _Main3rdTexBlendMode;
     uint    _Main3rdTexAlphaMode;
     uint    _Main3rdTex_UVMode;
     uint    _Main3rdTex_Cull;
 #endif
 #if defined(LIL_FEATURE_MAIN4TH)
+    uint    _Main4thColorBlendMode;
     uint    _Main4thTexBlendMode;
     uint    _Main4thTexAlphaMode;
     uint    _Main4thTex_UVMode;

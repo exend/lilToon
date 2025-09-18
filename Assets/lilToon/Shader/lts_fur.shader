@@ -54,6 +54,7 @@ Shader "Hidden/lilToonFur"
         // Main2nd
         [lilToggleLeft] _UseMain2ndTex              ("sMainColor2nd", Int) = 0
         [lilHDR]        _Color2nd                   ("sColor", Color) = (1,1,1,1)
+        [lilEnum]       _Main2ndColorBlendMode      ("sColorBlendModes", Int) = 3
                         _Main2ndTex                 ("Texture", 2D) = "white" {}
         [lilAngle]      _Main2ndTexAngle            ("sAngle", Float) = 0
         [lilUVAnim]     _Main2ndTex_ScrollRotate    ("sScrollRotates", Vector) = (0,0,0,0)
@@ -85,6 +86,7 @@ Shader "Hidden/lilToonFur"
         // Main3rd
         [lilToggleLeft] _UseMain3rdTex              ("sMainColor3rd", Int) = 0
         [lilHDR]        _Color3rd                   ("sColor", Color) = (1,1,1,1)
+        [lilEnum]       _Main3rdColorBlendMode      ("sColorBlendModes", Int) = 3
                         _Main3rdTex                 ("Texture", 2D) = "white" {}
         [lilAngle]      _Main3rdTexAngle            ("sAngle", Float) = 0
         [lilUVAnim]     _Main3rdTex_ScrollRotate    ("sScrollRotates", Vector) = (0,0,0,0)
@@ -116,6 +118,7 @@ Shader "Hidden/lilToonFur"
         // Main4th
         [lilToggleLeft] _UseMain4thTex              ("sMainColor4th", Int) = 0
         [lilHDR]        _Color4th                   ("sColor", Color) = (1,1,1,1)
+        [lilEnum]       _Main4thColorBlendMode      ("sColorBlendModes", Int) = 3
                         _Main4thTex                 ("Texture", 2D) = "white" {}
         [lilAngle]      _Main4thTexAngle            ("sAngle", Float) = 0
         [lilUVAnim]     _Main4thTex_ScrollRotate    ("sScrollRotates", Vector) = (0,0,0,0)
